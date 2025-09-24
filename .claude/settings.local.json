@@ -14,7 +14,10 @@
       "Bash(git add .specify/templates/plan-template.md)",
       "Bash(git add .claude/)",
       "Bash(git add .mcp.json)",
-      "Bash(git add .)"
+      "Bash(git add .)",
+      "Bash(git commit -m \"$(cat <<''EOF''\n添加 Kubernetes 学习项目的 Specify 方法论配置和 Claude Code 集成\n\n- 配置 Claude Code 代理系统 (.claude/agents/)：包括代码重构、审查、前端开发、Git 专家、Go 语言专家、规范专家和系统架构师\n- 添加 Specify 工作流命令 (.claude/commands/)：/specify、/plan、/tasks、/implement、/analyze、/clarify、/constitution\n- 配置 MCP (Model Context Protocol) 集成 (.mcp.json)\n- 更新项目规划模板 (.specify/templates/plan-template.md)\n- 添加代理系统说明文档 (AGENTS.md) 和 Claude 使用指南 (CLAUDE.md)\n- 创建规范目录结构 (specs/) 用于功能规格管理\n\n🤖 Generated with [Claude Code](https://claude.ai/code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(git add .claude/settings.local.json)",
+      "Bash(git commit -m \"更新 Claude 设置文件中的工具权限配置\n\n🤖 Generated with [Claude Code](https://claude.ai/code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\")"
     ],
     "deny": [],
     "ask": []
