@@ -106,7 +106,7 @@ tests/                   # Test files
 ## Important Notes
 
 - All feature work starts from specification (`/specify`)
-- Markdown 文档支持在文首保留 `[TOC]` 标签以启用目录导航，编辑时不要移除。
+- Markdown 文档已启用目录功能（md 支持 `[TOC]`），编辑时请保留文首标签以确保导航可用。
 - Follow the phase order: specify → plan → tasks → implement
 - Each phase validates prerequisites before execution
 - Templates enforce consistent structure across features
