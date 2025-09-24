@@ -55,9 +55,9 @@ Educational project structure per plan.md:
 - [x] T006 Create course structure `courses/00-foundation/` with subdirectories: 01-环境搭建/, 02-容器基础/, 03-Docker入门/, labs/
 - [x] T007 [P] Write environment setup guide `courses/00-foundation/01-环境搭建/README.md` with Mermaid diagrams
 - [x] T008 [P] Write container concepts guide `courses/00-foundation/02-容器基础/README.md` comparing containers vs VMs
-- [ ] T009 [P] Write Docker basics tutorial `courses/00-foundation/03-Docker入门/README.md` with hands-on examples
-- [ ] T010 Create Docker lab exercises `courses/00-foundation/labs/docker-basics.yaml` with validation scripts
-- [ ] T011 [P] Create foundation assessment quiz `courses/00-foundation/assessment/quiz.json` testing concepts
+- [x] T009 [P] Write Docker basics tutorial `courses/00-foundation/03-Docker入门/README.md` with hands-on examples
+- [x] T010 Create Docker lab exercises `courses/00-foundation/labs/docker-basics.yaml` with validation scripts
+- [x] T011 [P] Create foundation assessment quiz `courses/00-foundation/assessment/quiz.json` testing concepts
 
 ## Phase 3.3: Core Kubernetes Course (核心K8s课程)
 - [ ] T012 Create course structure `courses/01-core/` with subdirectories: 01-K8s架构/, 02-核心组件/, 03-应用部署/, labs/

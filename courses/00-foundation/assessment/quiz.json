@@ -1,0 +1,511 @@
+{
+  "metadata": {
+    "title": "Docker 基础概念评估测试",
+    "description": "测试对 Docker 基础概念、操作和最佳实践的掌握程度",
+    "version": "1.0",
+    "created_date": "2024-09-24",
+    "total_questions": 25,
+    "passing_score": 70,
+    "estimated_time_minutes": 30,
+    "difficulty": "beginner",
+    "topics": [
+      "容器基础概念",
+      "Docker 命令操作",
+      "镜像和容器管理",
+      "数据持久化",
+      "网络配置",
+      "Dockerfile 编写",
+      "最佳实践"
+    ],
+    "prerequisites": [
+      "完成环境搭建模块",
+      "完成容器基础理论学习",
+      "完成 Docker 入门教程",
+      "完成 Docker 实验练习"
+    ]
+  },
+  "instructions": {
+    "overview": "本测试共25道题，包括单选、多选和实际操作题。请仔细阅读每道题目，选择最合适的答案。",
+    "time_limit": "建议用时30分钟，无严格时间限制",
+    "scoring": "总分100分，答对70分以上视为通过",
+    "retake_policy": "可以重复测试，建议复习相关知识点后再次尝试"
+  },
+  "questions": [
+    {
+      "id": "Q001",
+      "type": "single_choice",
+      "difficulty": "easy",
+      "topic": "容器基础概念",
+      "question": "以下关于容器和虚拟机的描述，哪个是正确的？",
+      "options": [
+        "容器包含完整的操作系统，虚拟机不包含",
+        "容器共享主机内核，虚拟机有独立的内核",
+        "容器比虚拟机占用更多资源",
+        "容器和虚拟机的隔离程度完全相同"
+      ],
+      "correct_answer": "容器共享主机内核，虚拟机有独立的内核",
+      "explanation": "容器通过共享主机内核实现轻量化，而虚拟机需要完整的操作系统和独立内核，这是两者的主要区别。",
+      "points": 3
+    },
+    {
+      "id": "Q002",
+      "type": "single_choice",
+      "difficulty": "easy",
+      "topic": "Docker 基础概念",
+      "question": "Docker 镜像 (Image) 和容器 (Container) 的关系是什么？",
+      "options": [
+        "镜像是容器的运行实例",
+        "容器是镜像的运行实例",
+        "镜像和容器是同一概念",
+        "镜像必须从容器创建"
+      ],
+      "correct_answer": "容器是镜像的运行实例",
+      "explanation": "镜像是只读的模板，包含应用程序及其依赖；容器是基于镜像创建的可运行实例。",
+      "points": 3
+    },
+    {
+      "id": "Q003",
+      "type": "single_choice",
+      "difficulty": "medium",
+      "topic": "Docker 命令操作",
+      "question": "要在后台运行一个 nginx 容器并映射端口8080到80，应该使用哪个命令？",
+      "options": [
+        "docker run nginx:alpine -p 8080:80 -d",
+        "docker run -d -p 8080:80 nginx:alpine",
+        "docker run -background -port 8080:80 nginx:alpine",
+        "docker start -d -p 8080:80 nginx:alpine"
+      ],
+      "correct_answer": "docker run -d -p 8080:80 nginx:alpine",
+      "explanation": "-d 表示后台运行（detached），-p 8080:80 表示将主机8080端口映射到容器80端口，参数顺序很重要。",
+      "points": 4
+    },
+    {
+      "id": "Q004",
+      "type": "multiple_choice",
+      "difficulty": "medium",
+      "topic": "Docker 命令操作",
+      "question": "以下哪些命令可以查看正在运行的容器？（可多选）",
+      "options": [
+        "docker ps",
+        "docker container list",
+        "docker container ls",
+        "docker list",
+        "docker ps -a"
+      ],
+      "correct_answers": ["docker ps", "docker container list", "docker container ls"],
+      "explanation": "docker ps、docker container list、docker container ls 都可以查看运行中的容器。docker ps -a 显示所有容器包括已停止的，docker list 不是有效命令。",
+      "points": 5
+    },
+    {
+      "id": "Q005",
+      "type": "single_choice",
+      "difficulty": "easy",
+      "topic": "Docker 命令操作",
+      "question": "如何进入一个正在运行的容器的交互式终端？",
+      "options": [
+        "docker attach container_name",
+        "docker exec -it container_name /bin/bash",
+        "docker run -it container_name",
+        "docker connect container_name"
+      ],
+      "correct_answer": "docker exec -it container_name /bin/bash",
+      "explanation": "docker exec -it 可以在运行中的容器内执行命令，-i 保持交互，-t 分配伪终端。",
+      "points": 4
+    },
+    {
+      "id": "Q006",
+      "type": "single_choice",
+      "difficulty": "medium",
+      "topic": "数据持久化",
+      "question": "使用数据卷 (Volume) 的主要好处是什么？",
+      "options": [
+        "提高容器运行速度",
+        "减少镜像体积",
+        "实现数据持久化，容器删除后数据保留",
+        "增强容器安全性"
+      ],
+      "correct_answer": "实现数据持久化，容器删除后数据保留",
+      "explanation": "数据卷的主要作用是将数据存储在容器外部，即使容器被删除，数据卷中的数据仍然保留。",
+      "points": 4
+    },
+    {
+      "id": "Q007",
+      "type": "single_choice",
+      "difficulty": "medium",
+      "topic": "数据持久化",
+      "question": "创建并使用命名数据卷的正确步骤是什么？",
+      "options": [
+        "docker volume create my-vol && docker run -v my-vol:/data nginx",
+        "docker create volume my-vol && docker run --volume my-vol:/data nginx",
+        "docker volume new my-vol && docker run -mount my-vol:/data nginx",
+        "以上都不正确"
+      ],
+      "correct_answer": "docker volume create my-vol && docker run -v my-vol:/data nginx",
+      "explanation": "先用 docker volume create 创建命名数据卷，然后用 -v 参数在运行容器时挂载。",
+      "points": 5
+    },
+    {
+      "id": "Q008",
+      "type": "multiple_choice",
+      "difficulty": "medium",
+      "topic": "网络配置",
+      "question": "Docker 容器的网络模式包括哪些？（可多选）",
+      "options": [
+        "bridge（桥接模式）",
+        "host（主机模式）",
+        "none（无网络模式）",
+        "container（容器模式）",
+        "overlay（覆盖网络）"
+      ],
+      "correct_answers": ["bridge（桥接模式）", "host（主机模式）", "none（无网络模式）", "container（容器模式）"],
+      "explanation": "Docker 支持 bridge、host、none、container 等网络模式。overlay 主要用于 Docker Swarm 集群。",
+      "points": 5
+    },
+    {
+      "id": "Q009",
+      "type": "single_choice",
+      "difficulty": "hard",
+      "topic": "Dockerfile 编写",
+      "question": "在 Dockerfile 中，以下哪个指令用于设置工作目录？",
+      "options": [
+        "WORKDIR /app",
+        "SETDIR /app",
+        "CHDIR /app",
+        "DIRECTORY /app"
+      ],
+      "correct_answer": "WORKDIR /app",
+      "explanation": "WORKDIR 指令用于设置工作目录，后续的 RUN、CMD、COPY 等指令都将在此目录下执行。",
+      "points": 3
+    },
+    {
+      "id": "Q010",
+      "type": "single_choice",
+      "difficulty": "medium",
+      "topic": "Dockerfile 编写",
+      "question": "Dockerfile 中 COPY 和 ADD 指令的主要区别是什么？",
+      "options": [
+        "没有区别，功能完全相同",
+        "COPY 只能复制文件，ADD 可以复制文件和目录",
+        "ADD 有额外功能如自动解压缩和支持 URL，COPY 功能更简单纯粹",
+        "ADD 比 COPY 执行速度更快"
+      ],
+      "correct_answer": "ADD 有额外功能如自动解压缩和支持 URL，COPY 功能更简单纯粹",
+      "explanation": "ADD 指令除了复制文件外，还能自动解压tar文件和从URL下载，但推荐使用更明确的COPY指令。",
+      "points": 4
+    },
+    {
+      "id": "Q011",
+      "type": "code_analysis",
+      "difficulty": "medium",
+      "topic": "Dockerfile 编写",
+      "question": "分析以下 Dockerfile，找出潜在的问题：",
+      "code": "FROM ubuntu:latest\nRUN apt-get update\nRUN apt-get install -y nginx\nRUN apt-get install -y curl\nCOPY index.html /var/www/html/\nEXPOSE 80\nCMD nginx -g 'daemon off;'",
+      "options": [
+        "没有问题，Dockerfile 完全正确",
+        "应该合并 RUN 指令减少镜像层数，避免使用 latest 标签",
+        "nginx 配置不正确",
+        "缺少 WORKDIR 指令"
+      ],
+      "correct_answer": "应该合并 RUN 指令减少镜像层数，避免使用 latest 标签",
+      "explanation": "应该合并RUN指令（RUN apt-get update && apt-get install -y nginx curl && apt-get clean）来减少镜像层数，并使用具体版本标签而非latest。",
+      "points": 6
+    },
+    {
+      "id": "Q012",
+      "type": "single_choice",
+      "difficulty": "medium",
+      "topic": "镜像管理",
+      "question": "什么是多阶段构建 (Multi-stage Build)？",
+      "options": [
+        "在一个 Dockerfile 中定义多个应用程序",
+        "使用多个 Dockerfile 构建一个镜像",
+        "在一个 Dockerfile 中使用多个 FROM 指令，可以减少最终镜像大小",
+        "同时构建多个不同版本的镜像"
+      ],
+      "correct_answer": "在一个 Dockerfile 中使用多个 FROM 指令，可以减少最终镜像大小",
+      "explanation": "多阶段构建允许在一个Dockerfile中使用多个FROM指令，通常用于分离构建环境和运行环境，减少最终镜像体积。",
+      "points": 5
+    },
+    {
+      "id": "Q013",
+      "type": "single_choice",
+      "difficulty": "hard",
+      "topic": "容器安全",
+      "question": "从安全角度考虑，以下哪种做法是推荐的？",
+      "options": [
+        "始终使用 root 用户运行容器应用",
+        "在容器中创建非特权用户运行应用",
+        "禁用所有网络连接",
+        "不设置任何资源限制"
+      ],
+      "correct_answer": "在容器中创建非特权用户运行应用",
+      "explanation": "使用非root用户运行容器应用可以减少安全风险，这是容器安全的最佳实践之一。",
+      "points": 5
+    },
+    {
+      "id": "Q014",
+      "type": "multiple_choice",
+      "difficulty": "medium",
+      "topic": "最佳实践",
+      "question": "以下哪些是 Docker 最佳实践？（可多选）",
+      "options": [
+        "使用 .dockerignore 文件排除不必要的文件",
+        "尽量使用官方基础镜像",
+        "合并 RUN 指令减少镜像层数",
+        "在生产环境中使用 latest 标签",
+        "设置适当的健康检查"
+      ],
+      "correct_answers": ["使用 .dockerignore 文件排除不必要的文件", "尽量使用官方基础镜像", "合并 RUN 指令减少镜像层数", "设置适当的健康检查"],
+      "explanation": "除了使用latest标签外，其他都是推荐的最佳实践。生产环境应使用具体版本标签确保一致性。",
+      "points": 6
+    },
+    {
+      "id": "Q015",
+      "type": "practical",
+      "difficulty": "medium",
+      "topic": "实际操作",
+      "question": "请写出完成以下任务的 Docker 命令：启动一个名为 'my-web' 的 nginx 容器，映射主机 8080 端口到容器 80 端口，并挂载本地 ./html 目录到容器的 /usr/share/nginx/html",
+      "expected_answer": "docker run -d --name my-web -p 8080:80 -v ./html:/usr/share/nginx/html nginx",
+      "alternative_answers": [
+        "docker run --name my-web -d -p 8080:80 -v ./html:/usr/share/nginx/html nginx",
+        "docker run -d --name my-web -p 8080:80 --mount type=bind,source=./html,target=/usr/share/nginx/html nginx"
+      ],
+      "explanation": "使用 docker run 创建并启动容器，-d 后台运行，--name 指定名称，-p 端口映射，-v 挂载卷。参数顺序可以调整。",
+      "points": 6
+    },
+    {
+      "id": "Q016",
+      "type": "single_choice",
+      "difficulty": "easy",
+      "topic": "容器状态管理",
+      "question": "如何停止一个正在运行的容器？",
+      "options": [
+        "docker kill container_name",
+        "docker stop container_name",
+        "docker pause container_name",
+        "docker halt container_name"
+      ],
+      "correct_answer": "docker stop container_name",
+      "explanation": "docker stop 发送 SIGTERM 信号优雅停止容器，docker kill 发送 SIGKILL 强制终止，docker pause 只是暂停容器。",
+      "points": 3
+    },
+    {
+      "id": "Q017",
+      "type": "single_choice",
+      "difficulty": "medium",
+      "topic": "镜像管理",
+      "question": "docker images 和 docker image ls 命令的关系是什么？",
+      "options": [
+        "完全不同的命令，功能不同",
+        "是同一功能的不同写法，都用于列出本地镜像",
+        "docker images 显示详细信息，docker image ls 显示简要信息",
+        "docker image ls 是新版本命令，功能更强"
+      ],
+      "correct_answer": "是同一功能的不同写法，都用于列出本地镜像",
+      "explanation": "这两个命令功能相同，都用于列出本地镜像。docker image ls 是新的命令格式，docker images 是传统简写。",
+      "points": 3
+    },
+    {
+      "id": "Q018",
+      "type": "single_choice",
+      "difficulty": "hard",
+      "topic": "资源管理",
+      "question": "如何限制容器使用的内存不超过 512MB？",
+      "options": [
+        "docker run --memory=512m nginx",
+        "docker run -m 512m nginx",
+        "docker run --mem-limit=512m nginx",
+        "以上都正确"
+      ],
+      "correct_answer": "以上都正确",
+      "explanation": "--memory、-m、--mem-limit 都可以用来限制容器内存使用，512m表示512MB。",
+      "points": 4
+    },
+    {
+      "id": "Q019",
+      "type": "multiple_choice",
+      "difficulty": "medium",
+      "topic": "故障排查",
+      "question": "容器启动失败时，可以使用哪些方法排查问题？（可多选）",
+      "options": [
+        "docker logs container_name 查看容器日志",
+        "docker inspect container_name 查看容器详细信息",
+        "docker exec -it container_name /bin/bash 进入容器调试",
+        "docker events 查看Docker系统事件",
+        "docker run -it image_name /bin/bash 直接运行镜像调试"
+      ],
+      "correct_answers": ["docker logs container_name 查看容器日志", "docker inspect container_name 查看容器详细信息", "docker events 查看Docker系统事件", "docker run -it image_name /bin/bash 直接运行镜像调试"],
+      "explanation": "除了docker exec（需要容器运行中才能使用）外，其他都是有效的故障排查方法。",
+      "points": 5
+    },
+    {
+      "id": "Q020",
+      "type": "scenario",
+      "difficulty": "hard",
+      "topic": "综合应用",
+      "question": "场景题：你需要部署一个Web应用，包含前端（React）和后端（Node.js）。前端需要访问后端API，后端需要连接数据库（MySQL）。请描述使用Docker的部署方案要点。",
+      "key_points": [
+        "创建自定义网络连接各服务",
+        "使用数据卷持久化数据库数据",
+        "合理配置端口映射",
+        "设置环境变量配置连接信息",
+        "考虑服务启动顺序和健康检查"
+      ],
+      "explanation": "多服务Docker部署需要考虑网络互通、数据持久化、配置管理、服务发现等多个方面，通常使用Docker Compose更方便管理。",
+      "points": 8
+    },
+    {
+      "id": "Q021",
+      "type": "single_choice",
+      "difficulty": "easy",
+      "topic": "Docker 基础概念",
+      "question": "Docker Hub 是什么？",
+      "options": [
+        "Docker 的本地存储位置",
+        "Docker 的官方镜像仓库和服务",
+        "Docker 的配置文件",
+        "Docker 的网络配置工具"
+      ],
+      "correct_answer": "Docker 的官方镜像仓库和服务",
+      "explanation": "Docker Hub是Docker官方提供的云端镜像仓库服务，用户可以上传、下载和分享Docker镜像。",
+      "points": 3
+    },
+    {
+      "id": "Q022",
+      "type": "single_choice",
+      "difficulty": "medium",
+      "topic": "镜像优化",
+      "question": "以下哪种做法有助于减少Docker镜像体积？",
+      "options": [
+        "使用更大的基础镜像以包含更多工具",
+        "在每个RUN指令后清理缓存和临时文件",
+        "避免使用多阶段构建",
+        "在镜像中保留所有构建工具"
+      ],
+      "correct_answer": "在每个RUN指令后清理缓存和临时文件",
+      "explanation": "清理包管理器缓存、临时文件和不必要的构建依赖可以有效减少镜像体积。",
+      "points": 4
+    },
+    {
+      "id": "Q023",
+      "type": "practical",
+      "difficulty": "hard",
+      "topic": "Dockerfile 编写",
+      "question": "编写一个Dockerfile片段，实现以下要求：基于node:18-alpine，设置工作目录为/app，复制package.json并安装依赖，然后复制应用代码，暴露3000端口，以非root用户运行应用。",
+      "expected_answer": "FROM node:18-alpine\nWORKDIR /app\nCOPY package*.json ./\nRUN npm ci --only=production\nCOPY . .\nEXPOSE 3000\nRUN addgroup -g 1001 -S nodejs && adduser -S nodejs -u 1001\nUSER nodejs\nCMD [\"node\", \"index.js\"]",
+      "key_elements": [
+        "FROM node:18-alpine",
+        "WORKDIR /app",
+        "分层复制优化（先复制package.json）",
+        "RUN npm install/ci",
+        "COPY . .",
+        "EXPOSE 3000",
+        "创建非root用户",
+        "USER 切换用户"
+      ],
+      "explanation": "这种分层复制可以利用Docker缓存机制，先复制package.json安装依赖，再复制代码，提高构建效率。创建非root用户提升安全性。",
+      "points": 8
+    },
+    {
+      "id": "Q024",
+      "type": "multiple_choice",
+      "difficulty": "medium",
+      "topic": "Docker Compose",
+      "question": "虽然本课程重点是Docker基础，但Docker Compose作为重要工具也需了解。以下关于Docker Compose的说法哪些正确？（可多选）",
+      "options": [
+        "用于定义和管理多容器Docker应用",
+        "使用YAML文件描述服务配置",
+        "可以一键启动多个相关联的容器",
+        "只能用于开发环境，不适合生产环境",
+        "能够管理容器间的网络和数据卷"
+      ],
+      "correct_answers": ["用于定义和管理多容器Docker应用", "使用YAML文件描述服务配置", "可以一键启动多个相关联的容器", "能够管理容器间的网络和数据卷"],
+      "explanation": "Docker Compose适用于开发、测试和生产环境，是管理多容器应用的强大工具。",
+      "points": 5
+    },
+    {
+      "id": "Q025",
+      "type": "reflection",
+      "difficulty": "easy",
+      "topic": "学习总结",
+      "question": "通过本阶段的学习，你认为Docker相比传统虚拟化技术的最大优势是什么？请简要说明。",
+      "sample_answers": [
+        "轻量级：共享主机内核，启动速度快，资源占用少",
+        "可移植性：一次构建，到处运行，解决环境不一致问题",
+        "标准化：统一的打包和部署方式，便于DevOps实践",
+        "高密度：同等资源下可运行更多应用实例"
+      ],
+      "explanation": "这是一个开放性问题，旨在帮助学习者总结和思考Docker的核心价值。任何合理的答案都可以接受。",
+      "points": 4
+    }
+  ],
+  "scoring": {
+    "total_points": 125,
+    "grade_scale": {
+      "A": {
+        "range": "90-100",
+        "description": "优秀：全面掌握Docker基础概念和操作"
+      },
+      "B": {
+        "range": "80-89",
+        "description": "良好：较好掌握主要概念，少量知识点需强化"
+      },
+      "C": {
+        "range": "70-79",
+        "description": "及格：基本掌握核心概念，建议复习巩固"
+      },
+      "D": {
+        "range": "60-69",
+        "description": "不及格：需要重新学习相关知识点"
+      },
+      "F": {
+        "range": "0-59",
+        "description": "不及格：建议从头开始系统学习"
+      }
+    }
+  },
+  "feedback": {
+    "immediate": {
+      "correct_answer": "🎉 答对了！{explanation}",
+      "incorrect_answer": "❌ 答错了。正确答案是：{correct_answer}。{explanation}",
+      "partial_credit": "⚠️ 部分正确。{explanation}"
+    },
+    "final_report": {
+      "template": "测试完成！\n总分：{score}/{total_points} ({percentage}%)\n等级：{grade}\n\n强项：{strengths}\n需改进：{weaknesses}\n\n建议：{recommendations}"
+    }
+  },
+  "remediation": {
+    "weak_areas": {
+      "容器基础概念": {
+        "materials": ["重新阅读 courses/00-foundation/02-容器基础/README.md"],
+        "exercises": ["对比容器和虚拟机的特点和使用场景"]
+      },
+      "Docker 命令操作": {
+        "materials": ["复习 courses/00-foundation/03-Docker入门/README.md 中的命令部分"],
+        "exercises": ["完成 docker-basics.yaml 中的实际操作练习"]
+      },
+      "Dockerfile 编写": {
+        "materials": ["深入学习 Dockerfile 最佳实践"],
+        "exercises": ["编写和优化不同类型应用的 Dockerfile"]
+      },
+      "网络和存储": {
+        "materials": ["重点复习数据卷和网络配置章节"],
+        "exercises": ["实践多容器应用的网络通信"]
+      }
+    }
+  },
+  "next_steps": {
+    "on_pass": [
+      "恭喜通过基础评估！",
+      "可以进入核心K8s课程学习",
+      "建议先完成环境配置，搭建Kind集群",
+      "准备学习Kubernetes核心概念"
+    ],
+    "on_fail": [
+      "建议重新复习相关知识点",
+      "完成实际动手练习加深理解",
+      "可以重复参加测试直到通过",
+      "考虑寻求帮助或额外学习资源"
+    ]
+  }
+}
