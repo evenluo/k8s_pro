@@ -1,0 +1,119 @@
+# Learning Objectives Contract
+# 学习目标契约 - 定义每个模块的预期成果
+
+version: "1.0"
+type: learning-objectives
+description: "Kubernetes学习路径的标准化学习目标"
+
+contracts:
+  foundation:
+    id: "00-foundation"
+    name: "基础阶段"
+    objectives:
+      - id: "F-01"
+        description: "理解容器化概念和优势"
+        measurable_outcome: "能够解释容器vs虚拟机的区别"
+        validation: "quiz/container-concepts"
+
+      - id: "F-02"
+        description: "掌握Docker基本命令"
+        measurable_outcome: "独立构建、运行、调试容器"
+        validation: "lab/docker-basics"
+
+      - id: "F-03"
+        description: "配置macOS开发环境"
+        measurable_outcome: "成功安装并验证所有工具"
+        validation: "script/env-check.sh"
+
+  core:
+    id: "01-core"
+    name: "核心阶段"
+    objectives:
+      - id: "C-01"
+        description: "理解Kubernetes架构"
+        measurable_outcome: "绘制并解释K8s组件交互"
+        validation: "assessment/k8s-architecture"
+
+      - id: "C-02"
+        description: "部署应用到Kubernetes"
+        measurable_outcome: "使用kubectl部署多层应用"
+        validation: "lab/deploy-application"
+
+      - id: "C-03"
+        description: "管理配置和密钥"
+        measurable_outcome: "安全管理ConfigMap和Secret"
+        validation: "lab/config-management"
+
+  advanced:
+    id: "02-advanced"
+    name: "高级阶段"
+    objectives:
+      - id: "A-01"
+        description: "实施生产级安全"
+        measurable_outcome: "配置RBAC、网络策略、Pod安全"
+        validation: "lab/security-hardening"
+
+      - id: "A-02"
+        description: "监控和可观测性"
+        measurable_outcome: "部署Prometheus+Grafana监控栈"
+        validation: "lab/observability-stack"
+
+      - id: "A-03"
+        description: "故障排查和优化"
+        measurable_outcome: "诊断并解决性能问题"
+        validation: "scenario/troubleshooting"
+
+  project:
+    id: "03-project"
+    name: "项目实战"
+    objectives:
+      - id: "P-01"
+        description: "设计微服务架构"
+        measurable_outcome: "设计nginx+golang+前端架构"
+        validation: "review/architecture-design"
+
+      - id: "P-02"
+        description: "实施完整部署"
+        measurable_outcome: "部署生产级应用栈"
+        validation: "project/full-stack-deployment"
+
+      - id: "P-03"
+        description: "运维和扩展"
+        measurable_outcome: "执行滚动更新、扩缩容、备份恢复"
+        validation: "scenario/operations"
+
+validation_methods:
+  quiz:
+    type: "knowledge_check"
+    passing_score: 80
+    retry_allowed: true
+
+  lab:
+    type: "hands_on"
+    environment: "kind_cluster"
+    automated_check: true
+
+  assessment:
+    type: "comprehensive"
+    components: ["theory", "practical"]
+    time_limit: 60
+
+  script:
+    type: "automated"
+    executor: "bash"
+    output: "pass/fail"
+
+  scenario:
+    type: "problem_solving"
+    real_world: true
+    guided: false
+
+  review:
+    type: "peer_review"
+    criteria: "rubric"
+    feedback: true
+
+  project:
+    type: "capstone"
+    deliverables: ["code", "documentation", "presentation"]
+    evaluation: "holistic"

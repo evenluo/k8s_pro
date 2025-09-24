@@ -1,0 +1,28 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(.specify/scripts/bash/create-new-feature.sh --json \"我想从零开始学习,成为一个 k8s 容器化专家, 所以我想创建一系列的课程来帮助我实现这个目标.\")",
+      "Bash(xxd -l 200 /Users/evenluo/src/k8s_pro/specs/001-k8s/spec.md)",
+      "Bash(.specify/scripts/bash/setup-plan.sh --json)",
+      "Bash(.specify/scripts/bash/update-agent-context.sh claude)",
+      "Bash(.specify/scripts/bash/check-prerequisites.sh --json)",
+      "Read(//Users/evenluo/.config/claude/**)",
+      "Read(//System/Library/Sounds/**)",
+      "Bash(afplay /System/Library/Sounds/Glass.aiff)",
+      "Bash(/Users/evenluo/.config/claude/play_completion_sound.sh)",
+      "WebSearch",
+      "Bash(git add .specify/templates/plan-template.md)",
+      "Bash(git add .claude/)",
+      "Bash(git add .mcp.json)",
+      "Bash(git add .)"
+    ],
+    "deny": [],
+    "ask": []
+  },
+  "enabledMcpjsonServers": [
+    "serena",
+    "context7",
+    "playwright",
+    "shadcn"
+  ]
+}

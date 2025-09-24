@@ -1,0 +1,214 @@
+# Environment Validation Contract
+# 环境验证契约 - 确保学习环境满足要求
+
+version: "1.0"
+type: environment-validation
+description: "Kubernetes学习环境的标准化验证"
+
+validation_stages:
+  stage_1_system:
+    name: "系统基础要求"
+    checks:
+      - id: "SYS-01"
+        name: "操作系统版本"
+        command: "sw_vers -productVersion"
+        expected: ">=11.0"
+        required: true
+        error_message: "需要 macOS 11.0 或更高版本"
+
+      - id: "SYS-02"
+        name: "可用内存"
+        command: "echo $(($(sysctl -n hw.memsize) / 1024 / 1024 / 1024))GB"
+        expected: ">=20"
+        required: true
+        error_message: "至少需要 20GB 可用内存"
+
+      - id: "SYS-03"
+        name: "CPU架构"
+        command: "uname -m"
+        expected: ["x86_64", "arm64"]
+        required: true
+        error_message: "支持 Intel 或 Apple Silicon"
+
+  stage_2_docker:
+    name: "Docker环境"
+    prerequisite: "stage_1_system"
+    checks:
+      - id: "DOC-01"
+        name: "Docker Desktop安装"
+        command: "docker version --format '{{.Server.Version}}'"
+        expected: ">=20.10"
+        required: true
+        error_message: "需要安装 Docker Desktop 20.10+"
+
+      - id: "DOC-02"
+        name: "Docker运行状态"
+        command: "docker system info --format '{{.ServerErrors}}'"
+        expected: "[]"
+        required: true
+        error_message: "Docker Desktop 未运行"
+
+      - id: "DOC-03"
+        name: "Docker资源配置"
+        command: "docker system info --format '{{.MemTotal}}'"
+        expected: ">=8589934592"  # 8GB in bytes
+        required: true
+        error_message: "Docker Desktop 内存配置不足"
+
+  stage_3_kubernetes:
+    name: "Kubernetes工具"
+    prerequisite: "stage_2_docker"
+    checks:
+      - id: "K8S-01"
+        name: "kubectl安装"
+        command: "kubectl version --client -o json | jq -r '.clientVersion.gitVersion'"
+        expected: ">=v1.25"
+        required: true
+        error_message: "需要安装 kubectl 1.25+"
+
+      - id: "K8S-02"
+        name: "kind安装"
+        command: "kind version"
+        expected: "kind v0.1"
+        required: true
+        error_message: "需要安装 kind"
+
+      - id: "K8S-03"
+        name: "helm安装"
+        command: "helm version --short"
+        expected: "v3."
+        required: false
+        error_message: "建议安装 Helm 3"
+
+  stage_4_cluster:
+    name: "集群验证"
+    prerequisite: "stage_3_kubernetes"
+    checks:
+      - id: "CLU-01"
+        name: "Kind集群存在"
+        command: "kind get clusters 2>/dev/null | grep -c learn-k8s"
+        expected: "1"
+        required: false
+        error_message: "未找到 learn-k8s 集群"
+
+      - id: "CLU-02"
+        name: "集群连接"
+        command: "kubectl cluster-info --context kind-learn-k8s 2>/dev/null | grep -c 'running'"
+        expected: "1"
+        required: false
+        error_message: "无法连接到集群"
+
+      - id: "CLU-03"
+        name: "节点就绪"
+        command: "kubectl get nodes -o json | jq '[.items[].status.conditions[] | select(.type==\"Ready\").status] | all(. == \"True\")'"
+        expected: "true"
+        required: false
+        error_message: "集群节点未就绪"
+
+resource_limits:
+  development:
+    description: "开发环境资源限制"
+    memory:
+      docker_desktop: 8192  # MB
+      kind_cluster: 4096    # MB
+      applications: 2048    # MB
+      overhead: 1024        # MB
+      total: 15360          # MB (15GB)
+
+  production_simulation:
+    description: "生产模拟资源限制"
+    memory:
+      docker_desktop: 12288 # MB
+      kind_cluster: 8192    # MB
+      applications: 4096    # MB
+      monitoring: 2048      # MB
+      total: 26624          # MB (26GB) - exceeds 20GB limit
+
+optimization_recommendations:
+  memory:
+    - name: "使用轻量级镜像"
+      impact: "节省 30-50% 内存"
+      example: "nginx:alpine vs nginx:latest"
+
+    - name: "设置资源限制"
+      impact: "防止内存溢出"
+      example: "resources.limits.memory: 128Mi"
+
+    - name: "定期清理"
+      impact: "释放未使用资源"
+      command: "docker system prune -a"
+
+  performance:
+    - name: "减少副本数"
+      impact: "开发环境 1-2 副本足够"
+      example: "replicas: 2"
+
+    - name: "使用本地存储"
+      impact: "避免网络延迟"
+      example: "hostPath volumes"
+
+    - name: "禁用不必要的插件"
+      impact: "减少 CPU 使用"
+      example: "disable admission webhooks"
+
+validation_script: |
+  #!/bin/bash
+  # 完整的环境验证脚本
+
+  set -e
+
+  echo "🔍 Kubernetes 学习环境验证"
+  echo "=========================="
+
+  # 颜色定义
+  RED='\033[0;31m'
+  GREEN='\033[0;32m'
+  YELLOW='\033[1;33m'
+  NC='\033[0m'
+
+  # 验证函数
+  check_command() {
+      local cmd=$1
+      local name=$2
+      if command -v "$cmd" &> /dev/null; then
+          echo -e "${GREEN}✓${NC} $name 已安装"
+          return 0
+      else
+          echo -e "${RED}✗${NC} $name 未安装"
+          return 1
+      fi
+  }
+
+  # 系统检查
+  echo -e "\n📋 系统检查"
+  echo "----------"
+  echo "macOS 版本: $(sw_vers -productVersion)"
+  echo "CPU 架构: $(uname -m)"
+  echo "总内存: $(($(sysctl -n hw.memsize) / 1024 / 1024 / 1024))GB"
+
+  # Docker 检查
+  echo -e "\n🐳 Docker 检查"
+  echo "-------------"
+  if check_command docker "Docker"; then
+      docker version --format 'Docker {{.Server.Version}}'
+  fi
+
+  # Kubernetes 工具检查
+  echo -e "\n☸️  Kubernetes 工具"
+  echo "-----------------"
+  check_command kubectl "kubectl"
+  check_command kind "kind"
+  check_command helm "helm"
+  check_command k9s "k9s"
+
+  # 集群检查
+  echo -e "\n🌐 集群状态"
+  echo "----------"
+  if kind get clusters 2>/dev/null | grep -q learn-k8s; then
+      echo -e "${GREEN}✓${NC} learn-k8s 集群存在"
+      kubectl get nodes --context kind-learn-k8s 2>/dev/null || true
+  else
+      echo -e "${YELLOW}!${NC} learn-k8s 集群未创建"
+  fi
+
+  echo -e "\n✅ 验证完成!"
