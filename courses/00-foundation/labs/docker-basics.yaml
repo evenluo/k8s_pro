@@ -1,0 +1,489 @@
+# Docker 基础实验 (Docker Basics Lab)
+# 配套 courses/00-foundation/03-Docker入门/ 教程使用
+
+metadata:
+  name: docker-basics-lab
+  version: "1.0"
+  description: "Docker 基础概念和操作实验练习"
+  estimated_time: "90 minutes"
+  difficulty: "beginner"
+  prerequisites:
+    - "Docker Desktop 已安装"
+    - "完成容器基础理论学习"
+  learning_objectives:
+    - "掌握 Docker 基本命令操作"
+    - "理解镜像和容器的区别"
+    - "学会构建自定义镜像"
+    - "实践数据持久化和网络配置"
+
+# 实验环境要求
+environment:
+  docker_version: ">=20.0"
+  memory_limit: "2GB"
+  disk_space: "5GB"
+  network: "internet_required"
+
+# 实验练习配置
+exercises:
+
+  # 练习 1: 容器基础操作
+  - id: "ex01"
+    name: "容器生命周期管理"
+    description: "学习创建、运行、停止和删除容器"
+    time_limit: "15 minutes"
+    tasks:
+      - step: 1
+        description: "运行 Hello World 容器"
+        command: "docker run hello-world"
+        expected_output: "Hello from Docker!"
+        validation:
+          type: "command_success"
+          retry_count: 3
+
+      - step: 2
+        description: "运行交互式 Ubuntu 容器"
+        command: "docker run -it --name ubuntu-test ubuntu:20.04"
+        instruction: "在容器内执行 'cat /etc/os-release' 然后退出"
+        validation:
+          type: "container_created"
+          container_name: "ubuntu-test"
+
+      - step: 3
+        description: "清理测试容器"
+        command: "docker rm ubuntu-test"
+        validation:
+          type: "container_removed"
+          container_name: "ubuntu-test"
+
+  # 练习 2: Web 服务部署
+  - id: "ex02"
+    name: "Web 服务容器化"
+    description: "部署和管理 Web 服务容器"
+    time_limit: "20 minutes"
+    tasks:
+      - step: 1
+        description: "启动 nginx 容器并映射端口"
+        command: "docker run -d --name lab-nginx -p 8080:80 nginx:alpine"
+        validation:
+          type: "port_accessible"
+          port: 8080
+          expected_response: "Welcome to nginx"
+
+      - step: 2
+        description: "查看容器日志"
+        command: "docker logs lab-nginx"
+        validation:
+          type: "command_success"
+
+      - step: 3
+        description: "进入容器修改默认页面"
+        commands:
+          - "docker exec lab-nginx sh -c 'echo \"<h1>Lab Exercise Complete!</h1>\" > /usr/share/nginx/html/index.html'"
+        validation:
+          type: "http_content"
+          url: "http://localhost:8080"
+          expected_content: "Lab Exercise Complete!"
+
+      - step: 4
+        description: "停止并删除容器"
+        command: "docker rm -f lab-nginx"
+        validation:
+          type: "container_removed"
+          container_name: "lab-nginx"
+
+  # 练习 3: 数据持久化
+  - id: "ex03"
+    name: "数据卷管理"
+    description: "实践 Docker 数据持久化"
+    time_limit: "20 minutes"
+    tasks:
+      - step: 1
+        description: "创建命名数据卷"
+        command: "docker volume create lab-data"
+        validation:
+          type: "volume_exists"
+          volume_name: "lab-data"
+
+      - step: 2
+        description: "使用数据卷运行容器并写入数据"
+        commands:
+          - "docker run -d --name data-writer -v lab-data:/data alpine sleep 300"
+          - "docker exec data-writer sh -c 'echo \"Persistent data test\" > /data/test.txt'"
+        validation:
+          type: "file_exists_in_volume"
+          volume_name: "lab-data"
+          file_path: "/data/test.txt"
+
+      - step: 3
+        description: "删除容器但保留数据卷"
+        command: "docker rm -f data-writer"
+        validation:
+          type: "container_removed"
+          container_name: "data-writer"
+
+      - step: 4
+        description: "创建新容器验证数据持久化"
+        commands:
+          - "docker run --name data-reader -v lab-data:/data alpine cat /data/test.txt"
+        validation:
+          type: "command_output"
+          expected_output: "Persistent data test"
+
+      - step: 5
+        description: "清理资源"
+        commands:
+          - "docker rm data-reader"
+          - "docker volume rm lab-data"
+        validation:
+          type: "volume_removed"
+          volume_name: "lab-data"
+
+  # 练习 4: 镜像构建
+  - id: "ex04"
+    name: "自定义镜像构建"
+    description: "构建和测试自定义 Docker 镜像"
+    time_limit: "25 minutes"
+    setup:
+      create_files:
+        - path: "./lab-workspace/Dockerfile"
+          content: |
+            FROM nginx:alpine
+            RUN apk add --no-cache curl
+            COPY index.html /usr/share/nginx/html/
+            EXPOSE 80
+            HEALTHCHECK --interval=30s --timeout=3s \
+              CMD curl -f http://localhost/ || exit 1
+
+        - path: "./lab-workspace/index.html"
+          content: |
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <title>Custom Docker Image</title>
+                <style>
+                    body { font-family: Arial, sans-serif; margin: 40px; }
+                    .container { max-width: 600px; margin: 0 auto; text-align: center; }
+                    .success { color: #4CAF50; }
+                </style>
+            </head>
+            <body>
+                <div class="container">
+                    <h1 class="success">✅ 自定义镜像构建成功！</h1>
+                    <p>这是一个自定义的 Docker 镜像</p>
+                    <p>构建时间: <span id="time"></span></p>
+                    <script>
+                        document.getElementById('time').textContent = new Date().toLocaleString('zh-CN');
+                    </script>
+                </div>
+            </body>
+            </html>
+
+    tasks:
+      - step: 1
+        description: "构建自定义镜像"
+        command: "cd lab-workspace && docker build -t lab-custom-nginx ."
+        validation:
+          type: "image_exists"
+          image_name: "lab-custom-nginx"
+
+      - step: 2
+        description: "运行自定义镜像"
+        command: "docker run -d --name custom-web -p 8081:80 lab-custom-nginx"
+        validation:
+          type: "port_accessible"
+          port: 8081
+          expected_response: "自定义镜像构建成功"
+
+      - step: 3
+        description: "测试健康检查"
+        command: "sleep 35 && docker inspect custom-web --format='{{.State.Health.Status}}'"
+        validation:
+          type: "command_output"
+          expected_output: "healthy"
+
+      - step: 4
+        description: "查看镜像信息"
+        command: "docker images lab-custom-nginx"
+        validation:
+          type: "command_success"
+
+      - step: 5
+        description: "清理资源"
+        commands:
+          - "docker rm -f custom-web"
+          - "docker rmi lab-custom-nginx"
+        validation:
+          type: "image_removed"
+          image_name: "lab-custom-nginx"
+
+  # 练习 5: 多容器网络
+  - id: "ex05"
+    name: "容器网络通信"
+    description: "学习容器间网络通信"
+    time_limit: "20 minutes"
+    tasks:
+      - step: 1
+        description: "创建自定义网络"
+        command: "docker network create lab-network"
+        validation:
+          type: "network_exists"
+          network_name: "lab-network"
+
+      - step: 2
+        description: "启动后端服务容器"
+        command: "docker run -d --name backend --network lab-network nginx:alpine"
+        validation:
+          type: "container_running"
+          container_name: "backend"
+          network: "lab-network"
+
+      - step: 3
+        description: "启动客户端容器并测试连接"
+        command: "docker run --rm --network lab-network alpine wget -qO- http://backend"
+        validation:
+          type: "command_success"
+
+      - step: 4
+        description: "清理网络资源"
+        commands:
+          - "docker rm -f backend"
+          - "docker network rm lab-network"
+        validation:
+          type: "network_removed"
+          network_name: "lab-network"
+
+# 验证脚本配置
+validation_scripts:
+
+  # 环境检查脚本
+  environment_check:
+    script: |
+      #!/bin/bash
+      echo "🔍 检查 Docker 环境..."
+
+      # 检查 Docker 是否安装
+      if ! command -v docker &> /dev/null; then
+          echo "❌ Docker 未安装或不在 PATH 中"
+          exit 1
+      fi
+
+      # 检查 Docker 服务是否运行
+      if ! docker info &> /dev/null; then
+          echo "❌ Docker 服务未运行，请启动 Docker Desktop"
+          exit 1
+      fi
+
+      # 检查 Docker 版本
+      DOCKER_VERSION=$(docker --version | grep -oE '[0-9]+\.[0-9]+' | head -1)
+      echo "✅ Docker 版本: $DOCKER_VERSION"
+
+      # 检查可用内存
+      if command -v free &> /dev/null; then
+          AVAILABLE_MEM=$(free -m | awk 'NR==2{printf "%.1f", $7/1024}')
+          echo "📊 可用内存: ${AVAILABLE_MEM}GB"
+      fi
+
+      # 检查磁盘空间
+      AVAILABLE_DISK=$(df -h . | awk 'NR==2 {print $4}')
+      echo "💾 可用磁盘空间: $AVAILABLE_DISK"
+
+      echo "✅ Docker 环境检查完成！"
+
+  # 清理脚本
+  cleanup_script:
+    script: |
+      #!/bin/bash
+      echo "🧹 清理实验环境..."
+
+      # 停止并删除实验相关容器
+      CONTAINERS=("ubuntu-test" "lab-nginx" "data-writer" "data-reader" "custom-web" "backend")
+      for container in "${CONTAINERS[@]}"; do
+          if docker ps -a --format "table {{.Names}}" | grep -q "^${container}$"; then
+              echo "🗑️  删除容器: $container"
+              docker rm -f $container
+          fi
+      done
+
+      # 删除实验镜像
+      if docker images --format "table {{.Repository}}" | grep -q "^lab-custom-nginx$"; then
+          echo "🗑️  删除镜像: lab-custom-nginx"
+          docker rmi lab-custom-nginx
+      fi
+
+      # 删除数据卷
+      if docker volume ls --format "table {{.Name}}" | grep -q "^lab-data$"; then
+          echo "🗑️  删除数据卷: lab-data"
+          docker volume rm lab-data
+      fi
+
+      # 删除网络
+      if docker network ls --format "table {{.Name}}" | grep -q "^lab-network$"; then
+          echo "🗑️  删除网络: lab-network"
+          docker network rm lab-network
+      fi
+
+      # 删除工作目录
+      if [ -d "./lab-workspace" ]; then
+          echo "🗑️  删除工作目录: lab-workspace"
+          rm -rf ./lab-workspace
+      fi
+
+      echo "✅ 清理完成！"
+
+  # 自动验证脚本
+  auto_validation:
+    script: |
+      #!/bin/bash
+      echo "🔬 自动验证 Docker 基础实验..."
+
+      SUCCESS_COUNT=0
+      TOTAL_TESTS=5
+
+      # 测试 1: Docker 基本功能
+      echo "📋 测试 1: Docker 基本功能"
+      if docker run --rm hello-world | grep -q "Hello from Docker"; then
+          echo "✅ Docker 运行正常"
+          ((SUCCESS_COUNT++))
+      else
+          echo "❌ Docker 基本功能测试失败"
+      fi
+
+      # 测试 2: 端口映射
+      echo "📋 测试 2: 端口映射功能"
+      docker run -d --name test-nginx -p 8082:80 nginx:alpine > /dev/null
+      sleep 3
+      if curl -s http://localhost:8082 | grep -q "Welcome to nginx"; then
+          echo "✅ 端口映射功能正常"
+          ((SUCCESS_COUNT++))
+      else
+          echo "❌ 端口映射功能测试失败"
+      fi
+      docker rm -f test-nginx > /dev/null
+
+      # 测试 3: 数据卷
+      echo "📋 测试 3: 数据卷功能"
+      docker volume create test-vol > /dev/null
+      docker run --rm -v test-vol:/data alpine sh -c 'echo "test" > /data/test.txt' > /dev/null
+      if docker run --rm -v test-vol:/data alpine cat /data/test.txt | grep -q "test"; then
+          echo "✅ 数据卷功能正常"
+          ((SUCCESS_COUNT++))
+      else
+          echo "❌ 数据卷功能测试失败"
+      fi
+      docker volume rm test-vol > /dev/null
+
+      # 测试 4: 镜像构建
+      echo "📋 测试 4: 镜像构建功能"
+      mkdir -p test-build
+      cat > test-build/Dockerfile << 'EOF'
+      FROM alpine:latest
+      RUN echo "test build" > /test.txt
+      EOF
+      if docker build -t test-image test-build > /dev/null 2>&1; then
+          echo "✅ 镜像构建功能正常"
+          ((SUCCESS_COUNT++))
+          docker rmi test-image > /dev/null
+      else
+          echo "❌ 镜像构建功能测试失败"
+      fi
+      rm -rf test-build
+
+      # 测试 5: 网络功能
+      echo "📋 测试 5: 网络功能"
+      docker network create test-net > /dev/null
+      docker run -d --name test-server --network test-net nginx:alpine > /dev/null
+      sleep 2
+      if docker run --rm --network test-net alpine wget -qO- http://test-server | grep -q "Welcome to nginx"; then
+          echo "✅ 网络功能正常"
+          ((SUCCESS_COUNT++))
+      else
+          echo "❌ 网络功能测试失败"
+      fi
+      docker rm -f test-server > /dev/null
+      docker network rm test-net > /dev/null
+
+      # 输出结果
+      echo ""
+      echo "📊 验证结果: $SUCCESS_COUNT/$TOTAL_TESTS 通过"
+      if [ $SUCCESS_COUNT -eq $TOTAL_TESTS ]; then
+          echo "🎉 所有测试通过！Docker 环境配置正确。"
+          exit 0
+      else
+          echo "⚠️  部分测试失败，请检查 Docker 配置。"
+          exit 1
+      fi
+
+# 实验指导
+instructions:
+  before_start:
+    - "确保 Docker Desktop 已启动并运行正常"
+    - "建议在独立的工作目录中进行实验"
+    - "实验过程中如遇问题，可参考故障排查部分"
+
+  during_lab:
+    - "按顺序完成各个练习，不要跳过"
+    - "每个步骤完成后都要验证结果"
+    - "注意观察命令输出和错误信息"
+
+  after_completion:
+    - "运行清理脚本清理实验环境"
+    - "复习实验中使用的 Docker 命令"
+    - "尝试独立完成类似的操作"
+
+# 故障排查
+troubleshooting:
+  common_issues:
+    - issue: "端口已被占用"
+      solution: "使用 'netstat -tlnp | grep 端口号' 检查端口占用，或使用其他端口"
+
+    - issue: "容器启动失败"
+      solution: "使用 'docker logs 容器名' 查看日志，检查错误原因"
+
+    - issue: "镜像构建失败"
+      solution: "检查 Dockerfile 语法，确保所有文件都在构建上下文中"
+
+    - issue: "网络连接问题"
+      solution: "检查防火墙设置，确保 Docker Desktop 网络配置正确"
+
+# 学习资源
+resources:
+  references:
+    - title: "Docker 官方文档"
+      url: "https://docs.docker.com/"
+    - title: "Docker Hub"
+      url: "https://hub.docker.com/"
+
+  next_steps:
+    - "学习 Docker Compose 多容器编排"
+    - "深入了解 Dockerfile 最佳实践"
+    - "学习容器安全和优化技巧"
+
+# 评估标准
+assessment:
+  criteria:
+    - name: "基本操作掌握"
+      weight: 25
+      description: "能够熟练使用 docker run, stop, rm 等基本命令"
+
+    - name: "镜像管理"
+      weight: 25
+      description: "理解镜像构建过程，能够编写 Dockerfile"
+
+    - name: "数据管理"
+      weight: 20
+      description: "掌握数据卷的使用和数据持久化"
+
+    - name: "网络配置"
+      weight: 20
+      description: "理解端口映射和容器间通信"
+
+    - name: "故障排查"
+      weight: 10
+      description: "能够诊断和解决常见的 Docker 问题"
+
+  passing_score: 70
+
+  evaluation_method:
+    - "实际操作演示"
+    - "验证脚本自动检查"
+    - "问答形式理论考核"

@@ -28,7 +28,10 @@
       "Read(//System/Library/Sounds/**)",
       "Bash(afplay /System/Library/Sounds/Glass.aiff)",
       "Bash(/Users/evenluo/.config/claude/play_completion_sound.sh)",
-      "WebSearch"
+      "WebSearch",
+      "Bash(./courses/00-foundation/labs/validate-docker-lab.sh)",
+      "Bash(./courses/00-foundation/labs/validate-docker-lab.sh --help)",
+      "Bash(grep -n \"$$\" /Users/evenluo/src/k8s_pro/courses/00-foundation/labs/validate-docker-lab.sh)"
     ],
     "deny": [],
     "ask": []
