@@ -70,7 +70,7 @@ Educational project structure per plan.md:
 - [x] T019 [P] Create core assessment `courses/01-core/assessment/practical.md` deploying multi-tier app
 
 ## Phase 3.4: Advanced Production Course (高级生产课程)
-- [ ] T020 Create course structure `courses/02-advanced/` with subdirectories: 01-生产实践/, 02-监控运维/, 03-安全加固/, labs/
+- [x] T020 Create course structure `courses/02-advanced/` with subdirectories: 01-生产实践/, 02-监控运维/, 03-安全加固/, labs/
 - [ ] T021 [P] Write production practices guide `courses/02-advanced/01-生产实践/README.md` with Linux differences
 - [ ] T022 [P] Write monitoring guide `courses/02-advanced/02-监控运维/README.md` covering Prometheus/Grafana
 - [ ] T023 [P] Write security guide `courses/02-advanced/03-安全加固/README.md` with RBAC, NetworkPolicy
