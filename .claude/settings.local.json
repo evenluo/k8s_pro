@@ -31,7 +31,8 @@
       "WebSearch",
       "Bash(./courses/00-foundation/labs/validate-docker-lab.sh)",
       "Bash(./courses/00-foundation/labs/validate-docker-lab.sh --help)",
-      "Bash(grep -n \"$$\" /Users/evenluo/src/k8s_pro/courses/00-foundation/labs/validate-docker-lab.sh)"
+      "Bash(grep -n \"$$\" /Users/evenluo/src/k8s_pro/courses/00-foundation/labs/validate-docker-lab.sh)",
+      "Bash(tree courses/01-core/)"
     ],
     "deny": [],
     "ask": []

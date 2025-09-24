@@ -60,8 +60,8 @@ Educational project structure per plan.md:
 - [x] T011 [P] Create foundation assessment quiz `courses/00-foundation/assessment/quiz.json` testing concepts
 
 ## Phase 3.3: Core Kubernetes Course (核心K8s课程)
-- [ ] T012 Create course structure `courses/01-core/` with subdirectories: 01-K8s架构/, 02-核心组件/, 03-应用部署/, labs/
-- [ ] T013 [P] Write K8s architecture guide `courses/01-core/01-K8s架构/README.md` with component Mermaid diagrams
+- [x] T012 Create course structure `courses/01-core/` with subdirectories: 01-K8s架构/, 02-核心组件/, 03-应用部署/, labs/
+- [x] T013 [P] Write K8s architecture guide `courses/01-core/01-K8s架构/README.md` with component Mermaid diagrams
 - [ ] T014 [P] Write core components guide `courses/01-core/02-核心组件/README.md` covering Pods, Services, Deployments
 - [ ] T015 [P] Write application deployment guide `courses/01-core/03-应用部署/README.md` with kubectl examples
 - [ ] T016 Create Kind cluster setup lab `courses/01-core/labs/kind-cluster.yaml` with 2-node configuration
@@ -79,48 +79,63 @@ Educational project structure per plan.md:
 - [ ] T026 [P] Create troubleshooting scenarios `courses/02-advanced/labs/troubleshooting/` with 5 common issues
 - [ ] T027 [P] Create advanced assessment `courses/02-advanced/assessment/scenario.yaml` solving production issues
 
-## Phase 3.5: Project Implementation - Backend (项目实战-后端)
-- [ ] T028 Create Golang backend structure `courses/03-project/golang-backend/` with main.go, handlers/, models/
-- [ ] T029 Write Golang REST API `courses/03-project/golang-backend/main.go` with health/ready endpoints
-- [ ] T030 [P] Create API handlers `courses/03-project/golang-backend/handlers/api.go` for CRUD operations
-- [ ] T031 [P] Create data models `courses/03-project/golang-backend/models/data.go` with validation
-- [ ] T032 Write Dockerfile `courses/03-project/golang-backend/Dockerfile` with multi-stage build
-- [ ] T033 Create backend K8s manifests `courses/03-project/golang-backend/k8s/deployment.yaml` with 3 replicas
+## Phase 3.5: Service Mesh with Istio (服务网格-Istio)
+- [ ] T028 Create course structure `courses/03-service-mesh/` with subdirectories: 01-Istio架构/, 02-流量管理/, 03-安全策略/, 04-可观测性/, labs/
+- [ ] T029 [P] Write Istio architecture guide `courses/03-service-mesh/01-Istio架构/README.md` with control/data plane diagrams
+- [ ] T030 [P] Write traffic management guide `courses/03-service-mesh/02-流量管理/README.md` covering VirtualService, DestinationRule
+- [ ] T031 [P] Write security policies guide `courses/03-service-mesh/03-安全策略/README.md` with mTLS, AuthorizationPolicy
+- [ ] T032 [P] Write observability guide `courses/03-service-mesh/04-可观测性/README.md` covering metrics, tracing, logging
+- [ ] T033 Create Istio installation lab `courses/03-service-mesh/labs/istio-setup.yaml` with resource-optimized profile
+- [ ] T034 Create traffic routing lab `courses/03-service-mesh/labs/traffic-management.yaml` with canary deployment
+- [ ] T035 [P] Create security lab `courses/03-service-mesh/labs/security-policies.yaml` with mTLS and authorization
+- [ ] T036 [P] Create observability lab `courses/03-service-mesh/labs/monitoring-tracing.yaml` with Jaeger and Kiali
+- [ ] T037 Create service mesh assessment `courses/03-service-mesh/assessment/mesh-scenario.yaml` with multi-service routing
+- [ ] T038 [P] Create Istio troubleshooting guide `courses/03-service-mesh/troubleshooting/README.md` with common issues
+- [ ] T039 Create service mesh migration lab `courses/03-service-mesh/labs/mesh-migration.yaml` from vanilla K8s to Istio
 
-## Phase 3.6: Project Implementation - Frontend (项目实战-前端)
-- [ ] T034 [P] Create React frontend structure `courses/03-project/frontend-app/` with src/, public/
-- [ ] T035 [P] Write frontend application `courses/03-project/frontend-app/src/App.js` with API integration
-- [ ] T036 [P] Create frontend Dockerfile `courses/03-project/frontend-app/Dockerfile` with nginx serving
-- [ ] T037 [P] Create frontend K8s manifests `courses/03-project/frontend-app/k8s/deployment.yaml` with 2 replicas
+## Phase 3.6: Project Implementation - Backend (项目实战-后端)
+- [ ] T040 Create Golang backend structure `courses/04-project/golang-backend/` with main.go, handlers/, models/
+- [ ] T041 Write Golang REST API `courses/04-project/golang-backend/main.go` with health/ready endpoints
+- [ ] T042 [P] Create API handlers `courses/04-project/golang-backend/handlers/api.go` for CRUD operations
+- [ ] T043 [P] Create data models `courses/04-project/golang-backend/models/data.go` with validation
+- [ ] T044 Write Dockerfile `courses/04-project/golang-backend/Dockerfile` with multi-stage build
+- [ ] T045 Create backend K8s manifests `courses/04-project/golang-backend/k8s/deployment.yaml` with 3 replicas
 
-## Phase 3.7: Project Implementation - Gateway (项目实战-网关)
-- [ ] T038 Create nginx gateway configuration `courses/03-project/nginx-gateway/nginx.conf` with path routing
-- [ ] T039 Create Ingress manifest `courses/03-project/deployment/ingress.yaml` for routing rules
-- [ ] T040 [P] Create ConfigMaps `courses/03-project/deployment/configmap.yaml` for application configuration
-- [ ] T041 [P] Create Secrets manifest `courses/03-project/deployment/secrets.yaml` for credentials
+## Phase 3.7: Project Implementation - Frontend (项目实战-前端)
+- [ ] T046 [P] Create React frontend structure `courses/04-project/frontend-app/` with src/, public/
+- [ ] T047 [P] Write frontend application `courses/04-project/frontend-app/src/App.js` with API integration
+- [ ] T048 [P] Create frontend Dockerfile `courses/04-project/frontend-app/Dockerfile` with nginx serving
+- [ ] T049 [P] Create frontend K8s manifests `courses/04-project/frontend-app/k8s/deployment.yaml` with 2 replicas
 
-## Phase 3.8: Validation and Testing Tools (验证测试工具)
-- [ ] T042 Create application validation script `tools/validation/test-deployment.sh` checking all components
-- [ ] T043 [P] Create performance test script `tools/validation/load-test.sh` with memory monitoring
-- [ ] T044 [P] Create cleanup script `tools/troubleshoot/cleanup.sh` for resource management
-- [ ] T045 [P] Create backup script `tools/troubleshoot/backup-restore.sh` for data persistence
+## Phase 3.8: Project Implementation - Gateway (项目实战-网关)
+- [ ] T050 Create nginx gateway configuration `courses/04-project/nginx-gateway/nginx.conf` with path routing
+- [ ] T051 Create Ingress manifest `courses/04-project/deployment/ingress.yaml` for routing rules
+- [ ] T052 [P] Create ConfigMaps `courses/04-project/deployment/configmap.yaml` for application configuration
+- [ ] T053 [P] Create Secrets manifest `courses/04-project/deployment/secrets.yaml` for credentials
 
-## Phase 3.9: Documentation and Resources (文档资源)
-- [ ] T046 [P] Create kubectl cheatsheet `resources/cheatsheets/kubectl-commands.md` with Chinese explanations
-- [ ] T047 [P] Create troubleshooting guide `resources/guides/troubleshooting.md` with common issues
-- [ ] T048 [P] Generate architecture diagrams `resources/diagrams/` using Mermaid for all components
-- [ ] T049 Create learning progress tracker `resources/progress-tracker.yaml` based on data-model.md
-- [ ] T050 Create final validation checklist `resources/validation-checklist.md` ensuring all objectives met
+## Phase 3.9: Validation and Testing Tools (验证测试工具)
+- [ ] T054 Create application validation script `tools/validation/test-deployment.sh` checking all components
+- [ ] T055 [P] Create performance test script `tools/validation/load-test.sh` with memory monitoring
+- [ ] T056 [P] Create cleanup script `tools/troubleshoot/cleanup.sh` for resource management
+- [ ] T057 [P] Create backup script `tools/troubleshoot/backup-restore.sh` for data persistence
+
+## Phase 3.10: Documentation and Resources (文档资源)
+- [ ] T058 [P] Create kubectl cheatsheet `resources/cheatsheets/kubectl-commands.md` with Chinese explanations
+- [ ] T059 [P] Create troubleshooting guide `resources/guides/troubleshooting.md` with common issues
+- [ ] T060 [P] Generate architecture diagrams `resources/diagrams/` using Mermaid for all components
+- [ ] T061 Create learning progress tracker `resources/progress-tracker.yaml` based on data-model.md
+- [ ] T062 Create final validation checklist `resources/validation-checklist.md` ensuring all objectives met
 
 ## Task Dependencies
 
 ### Critical Path
 ```
-T001 → T006 → T012 → T020 → T028-T041 → T042
+T001 → T006 → T012 → T020 → T028 → T040-T053 → T054
      ↘ T002-T005 (parallel setup)
         ↘ T007-T011 (parallel foundation)
            ↘ T013-T019 (parallel core)
               ↘ T021-T027 (parallel advanced)
+                 ↘ T029-T039 (parallel service mesh)
 ```
 
 ### Parallel Execution Examples
@@ -141,11 +156,20 @@ Task T008 "Write container concepts guide"
 Task T009 "Write Docker basics tutorial"
 ```
 
+**Service Mesh Content (可并行)**:
+```bash
+# Create Istio learning materials simultaneously
+Task T029 "Write Istio architecture guide"
+Task T030 "Write traffic management guide"
+Task T031 "Write security policies guide"
+Task T032 "Write observability guide"
+```
+
 **Project Components (可并行)**:
 ```bash
 # Build frontend and backend independently
-Task T029-T033 "Backend implementation"
-Task T034-T037 "Frontend implementation"
+Task T041-T045 "Backend implementation"
+Task T046-T049 "Frontend implementation"
 ```
 
 ## Validation Gates
@@ -154,8 +178,9 @@ Task T034-T037 "Frontend implementation"
 - **After T011**: Validate foundation learning objectives met
 - **After T019**: Ensure core K8s concepts understood
 - **After T027**: Confirm production readiness
-- **After T041**: Test complete application stack
-- **After T050**: Final comprehensive validation
+- **After T039**: Verify service mesh deployment and traffic management
+- **After T053**: Test complete application stack with Istio integration
+- **After T062**: Final comprehensive validation
 
 ## Resource Constraints
 
@@ -167,12 +192,14 @@ All tasks must respect:
 
 ## Success Criteria
 
-✓ All 50 tasks completed
-✓ Environment runs within 20GB limit
-✓ nginx+golang+frontend stack deployed
-✓ All validation scripts passing
+✓ All 62 tasks completed
+✓ Environment runs within 20GB limit (including Istio overhead)
+✓ nginx+golang+frontend stack deployed with service mesh
+✓ Istio traffic management and security policies functional
+✓ All validation scripts passing (including service mesh tests)
 ✓ Chinese documentation with English terms
 ✓ Mermaid diagrams in all key documents
+✓ Complete service mesh observability stack (Jaeger, Kiali, Prometheus)
 
 ---
 *Generated from design documents in /specs/001-k8s/*
