@@ -45,16 +45,16 @@ Educational project structure per plan.md:
 - **Application**: `courses/03-project/nginx-gateway/`, etc.
 
 ## Phase 3.1: Environment Setup (基础环境配置)
-- [ ] T001 Create main project directory structure: courses/, tools/, resources/, specs/
-- [ ] T002 [P] Create setup script `tools/setup/install-dependencies.sh` for macOS with Homebrew
-- [ ] T003 [P] Create environment validation script `tools/validation/check-environment.sh` based on contracts/environment-validation.yaml
-- [ ] T004 [P] Create Docker Desktop configuration guide `resources/guides/docker-setup.md` with 8GB memory allocation
-- [ ] T005 Create Kind cluster configuration `tools/setup/kind-config.yaml` for 3-node cluster within 20GB limit
+- [x] T001 Create main project directory structure: courses/, tools/, resources/, specs/
+- [x] T002 [P] Create setup script `tools/setup/install-dependencies.sh` for macOS with Homebrew
+- [x] T003 [P] Create environment validation script `tools/validation/check-environment.sh` based on contracts/environment-validation.yaml
+- [x] T004 [P] Create Docker Desktop configuration guide `resources/guides/docker-setup.md` with 8GB memory allocation
+- [x] T005 Create Kind cluster configuration `tools/setup/kind-config.yaml` for 3-node cluster within 20GB limit
 
 ## Phase 3.2: Foundation Course Materials (基础课程内容)
-- [ ] T006 Create course structure `courses/00-foundation/` with subdirectories: 01-环境搭建/, 02-容器基础/, 03-Docker入门/, labs/
-- [ ] T007 [P] Write environment setup guide `courses/00-foundation/01-环境搭建/README.md` with Mermaid diagrams
-- [ ] T008 [P] Write container concepts guide `courses/00-foundation/02-容器基础/README.md` comparing containers vs VMs
+- [x] T006 Create course structure `courses/00-foundation/` with subdirectories: 01-环境搭建/, 02-容器基础/, 03-Docker入门/, labs/
+- [x] T007 [P] Write environment setup guide `courses/00-foundation/01-环境搭建/README.md` with Mermaid diagrams
+- [x] T008 [P] Write container concepts guide `courses/00-foundation/02-容器基础/README.md` comparing containers vs VMs
 - [ ] T009 [P] Write Docker basics tutorial `courses/00-foundation/03-Docker入门/README.md` with hands-on examples
 - [ ] T010 Create Docker lab exercises `courses/00-foundation/labs/docker-basics.yaml` with validation scripts
 - [ ] T011 [P] Create foundation assessment quiz `courses/00-foundation/assessment/quiz.json` testing concepts
