@@ -62,7 +62,7 @@ Educational project structure per plan.md:
 ## Phase 3.3: Core Kubernetes Course (核心K8s课程)
 - [x] T012 Create course structure `courses/01-core/` with subdirectories: 01-K8s架构/, 02-核心组件/, 03-应用部署/, labs/
 - [x] T013 [P] Write K8s architecture guide `courses/01-core/01-K8s架构/README.md` with component Mermaid diagrams
-- [ ] T014 [P] Write core components guide `courses/01-core/02-核心组件/README.md` covering Pods, Services, Deployments
+- [x] T014 [P] Write core components guide `courses/01-core/02-核心组件/README.md` covering Pods, Services, Deployments
 - [ ] T015 [P] Write application deployment guide `courses/01-core/03-应用部署/README.md` with kubectl examples
 - [ ] T016 Create Kind cluster setup lab `courses/01-core/labs/kind-cluster.yaml` with 2-node configuration
 - [ ] T017 Create nginx deployment lab `courses/01-core/labs/nginx-deployment.yaml` with resource limits

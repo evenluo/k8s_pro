@@ -1,3 +1,5 @@
+[TOC]
+
 # 核心 Kubernetes 课程评估 (Core K8s Assessment)
 
 > 本模块内容将在 T019 任务中完整实现

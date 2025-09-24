@@ -1,6 +1,6 @@
-# Kubernetes 架构 (Kubernetes Architecture)
-
 [TOC]
+
+# Kubernetes 架构 (Kubernetes Architecture)
 
 ## 学习目标
 

@@ -13,6 +13,7 @@
 
 ## Coding Style & Naming Conventions
 - Structure Markdown with clear heading levels, short paragraphs, and fenced `bash` blocks for commands; keep emoji purposeful.
+- Markdown 文档支持在文首加入 `[TOC]` 标签以启用目录导航，请保持该标签。
 - Follow the curriculum voice: explanatory prose primarily in Chinese with English technical terms (per FR-009) and one idea per subsection.
 - Branch and file names remain lowercase and hyphenated (`001-feature`, `data-model.md`); scripts stay executable and use snake-case.
 
