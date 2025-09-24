@@ -63,11 +63,11 @@ Educational project structure per plan.md:
 - [x] T012 Create course structure `courses/01-core/` with subdirectories: 01-K8s架构/, 02-核心组件/, 03-应用部署/, labs/
 - [x] T013 [P] Write K8s architecture guide `courses/01-core/01-K8s架构/README.md` with component Mermaid diagrams
 - [x] T014 [P] Write core components guide `courses/01-core/02-核心组件/README.md` covering Pods, Services, Deployments
-- [ ] T015 [P] Write application deployment guide `courses/01-core/03-应用部署/README.md` with kubectl examples
-- [ ] T016 Create Kind cluster setup lab `courses/01-core/labs/kind-cluster.yaml` with 2-node configuration
-- [ ] T017 Create nginx deployment lab `courses/01-core/labs/nginx-deployment.yaml` with resource limits
-- [ ] T018 [P] Create ConfigMap/Secret lab `courses/01-core/labs/config-management.yaml` for configuration
-- [ ] T019 [P] Create core assessment `courses/01-core/assessment/practical.yaml` deploying multi-tier app
+- [x] T015 [P] Write application deployment guide `courses/01-core/03-应用部署/README.md` with kubectl examples
+- [x] T016 Create Kind cluster setup lab `courses/01-core/labs/kind-cluster.md` with 2-node configuration
+- [x] T017 Create nginx deployment lab `courses/01-core/labs/nginx-deployment.md` with resource limits
+- [x] T018 [P] Create ConfigMap/Secret lab `courses/01-core/labs/config-management.md` for configuration
+- [x] T019 [P] Create core assessment `courses/01-core/assessment/practical.md` deploying multi-tier app
 
 ## Phase 3.4: Advanced Production Course (高级生产课程)
 - [ ] T020 Create course structure `courses/02-advanced/` with subdirectories: 01-生产实践/, 02-监控运维/, 03-安全加固/, labs/
