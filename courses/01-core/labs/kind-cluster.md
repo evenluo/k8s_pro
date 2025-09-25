@@ -14,6 +14,28 @@
 - 掌握集群的基本管理和监控操作
 - 进行节点状态检查和故障排查
 
+## 概念卡速记
+
+> 📌 **概念卡：Kind Cluster Configuration（Kind 集群配置）**  
+> **定义**：通过 `kind-config.yaml` 声明集群角色、镜像版本、端口映射与网络参数。  
+> **实验提醒**：配置文件是可重用资产，建议保存在版本控制中以支持不同拓扑的快速切换。  
+> **关键命令**：`kind create cluster --config kind-config.yaml`
+
+> 📌 **概念卡：extraPortMappings（端口映射）**  
+> **定义**：Kind 的端口映射配置，将容器内 NodePort 暴露到宿主机指定端口。  
+> **实验提醒**：确保 hostPort 未被占用，否则 Kind 启动会失败；删除集群后映射自动释放。  
+> **关键命令**：`docker ps --format '{{.Ports}}'` 查看映射
+
+> 📌 **概念卡：kubeadmConfigPatches（配置补丁）**  
+> **定义**：在 Kind 创建时注入 kubeadm 配置，用于附加控制器参数、kubelet 额外参数等。  
+> **实验提醒**：控制平面与工作节点可分别定义补丁，常用于设置污点、labels 及安全加固。  
+> **参考字段**：`InitConfiguration`、`JoinConfiguration`
+
+> 📌 **概念卡：Node Label（节点标签）**  
+> **定义**：键值对形式的节点元数据，用于调度约束、拓扑感知与运维标记。  
+> **实验提醒**：统一 label 命名规范（例如 `environment=lab`），便于后续使用 `nodeSelector` 与 `TopologySpreadConstraints`。  
+> **关键命令**：`kubectl label nodes kind-worker node-type=worker`
+
 ## 前置条件
 
 - ✅ Docker Desktop 已安装并运行

@@ -32,11 +32,15 @@
       "Bash(./courses/00-foundation/labs/validate-docker-lab.sh)",
       "Bash(./courses/00-foundation/labs/validate-docker-lab.sh --help)",
       "Bash(grep -n \"$$\" /Users/evenluo/src/k8s_pro/courses/00-foundation/labs/validate-docker-lab.sh)",
-      "Bash(tree courses/01-core/)"
+      "Bash(tree courses/01-core/)",
+      "mcp__serena__list_dir",
+      "mcp__serena__find_file",
+      "mcp__serena__search_for_pattern"
     ],
     "deny": [],
     "ask": []
   },
+  "enableAllProjectMcpServers": true,
   "enabledMcpjsonServers": [
     "serena",
     "context7",

@@ -15,6 +15,33 @@
 - 实现配置的动态更新和热重载
 - 理解配置管理的最佳实践和安全考虑
 
+## 概念卡速记
+
+> 📌 **概念卡：ConfigMap Data Keys（配置键值）**  
+> **定义**：ConfigMap 可存储字面值、文件、目录等多种数据源，键名需符合 DNS_SUBDOMAIN 规范。  
+> **实验提醒**：键名中若包含 `.`，挂载为文件时会被转换为目录结构，需提前设计命名。  
+> **关键命令**：`kubectl create configmap --from-file`、`kubectl get configmap -o yaml`
+
+> 📌 **概念卡：Secret 类型（Opaque/TLS/BasicAuth）**  
+> **定义**：Secret 以 Base64 编码保存敏感数据，根据用途划分为 `Opaque`、`kubernetes.io/tls`、`kubernetes.io/basic-auth` 等类型。  
+> **实验提醒**：编码只是一层封装，仍需搭配 RBAC、Namespace 隔离与加密存储（如启用 etcd encryption）。  
+> **关键命令**：`kubectl create secret generic db-credentials --from-literal=username=admin`
+
+> 📌 **概念卡：Projected Volume（投射卷）**  
+> **定义**：允许将多个来源（ConfigMap、Secret、DownwardAPI、ServiceAccountToken）汇聚成一个挂载点。  
+> **实验提醒**：Projected 卷默认只读，适合将多种配置整合到统一路径，避免容器内多次挂载。  
+> **关键字段**：`volumeMounts.readOnly: true`
+
+> 📌 **概念卡：热更新策略（Hot Reload Strategies）**  
+> **定义**：通过监控挂载文件或版本号，实现无需重建镜像的配置更新方式。  
+> **实验提醒**：应用需自行监听文件变化或结合 `configMapKeyRef` + 环境变量；无法自动热更新时，可使用 `kubectl rollout restart`。  
+> **关键命令**：`kubectl rollout restart deployment/<name>`
+
+> 📌 **概念卡：Kustomize（多环境配置管理）**  
+> **定义**：Kubernetes 原生的配置定制工具，通过 `kustomization.yaml` 组合基础清单与环境补丁。  
+> **实验提醒**：使用 `overlays` 目录管理 dev/staging/prod 等环境差异，避免复制粘贴 YAML。  
+> **关键命令**：`kubectl apply -k overlays/prod`
+
 ## 前置条件
 
 - ✅ Kind 集群运行正常

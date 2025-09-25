@@ -4,6 +4,28 @@
 
 本指南将帮助你正确配置 Docker Desktop，为 Kubernetes 学习环境提供充足的资源。
 
+## 概念卡速记
+
+> 📌 **概念卡：Docker Desktop Resource Profile（资源配置档案）**  
+> **定义**：Docker Desktop 通过图形化界面分配 CPU、内存、磁盘等资源，影响容器运行上限。  
+> **学习提醒**：与课程中的 Kind 配置联动，需保证内存 ≥8GB、CPU ≥4 核，避免集群启动失败。  
+> **快捷路径**：`Docker Desktop → Settings → Resources → Advanced`
+
+> 📌 **概念卡：Docker Engine JSON 配置**  
+> **定义**：位于 `~/.docker/daemon.json` 的引擎级配置文件，可开启 BuildKit、垃圾回收、镜像加速等特性。  
+> **学习提醒**：修改后需重新启动 Docker；建议使用版本控制保存调整前后差异。  
+> **关键字段**：`"builder.gc.enabled"`、`"registry-mirrors"`
+
+> 📌 **概念卡：BuildKit（新一代构建引擎）**  
+> **定义**：Docker 的改进型构建架构，提供更快的构建速度与并行能力，支持前端缓存。  
+> **学习提醒**：开启 BuildKit 后需关注构建日志格式变化，可通过环境变量 `DOCKER_BUILDKIT=1` 临时启用。  
+> **关键命令**：`docker buildx build`
+
+> 📌 **概念卡：Registry Mirror（镜像加速器）**  
+> **定义**：Docker Engine 在拉取镜像时的代理与缓存，减少网络延迟。  
+> **学习提醒**：国内网络建议配置镜像加速器，并定期验证可用性，避免长时间卡在 `Pulling fs layer`。  
+> **配置示例**：`"registry-mirrors": ["https://docker.mirrors.ustc.edu.cn"]`
+
 ## 📋 目录
 
 1. [安装 Docker Desktop](#安装-docker-desktop)
