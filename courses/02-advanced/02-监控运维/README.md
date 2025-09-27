@@ -131,6 +131,23 @@ receivers:
 - **安全加固 (T023)**：在 Grafana 中加入安全仪表，如 `audit_log_count`、`networkpolicy_denied_connections`
 - **Service Mesh 模块**：后续会在 Istio 章节加入 Kiali、Jaeger 指标，与 Prometheus Federation 集成
 
+## 概念卡速记
+
+> 📌 **Observability三支柱**
+> 定义：指标（Metrics）、日志（Logs）、追踪（Traces）共同构成的观测体系。
+> 课程作用：指导学员在监控模块中覆盖平台层与业务层信号，搭建指标、日志、追踪的协作流程。
+> 快速提示：Kind 环境可通过 `helm upgrade --install kube-monitor ...` 获取指标，日志/追踪在后续模块补齐。
+
+> 📌 **Prometheus Recording Rule**
+> 定义：将复杂查询预聚合为新时间序列，提高告警和看板性能。
+> 课程作用：在资源受限的 12GB 集群中降低查询开销，为告警和 SLI 计算提供稳定数据源。
+> 快速提示：在 `prometheusSpec.ruleSelector` 中添加自定义规则文件，并监控 `prometheus_rule_evaluation_seconds`。
+
+> 📌 **SLO 警戒线 (Error Budget Policy)**
+> 定义：将服务目标转化为可用误差预算，用于控制发布节奏和告警阈值。
+> 课程作用：连接监控指标与生产 Runbook，当误差预算耗尽时触发发布冻结和专项排查。
+> 快速提示：结合 `burn-rate` 告警规则，设置 `short_window` 与 `long_window` 双门限，例如 5 分钟 & 1 小时窗口。
+
 ## 学习检验
 
 ### 自查问题

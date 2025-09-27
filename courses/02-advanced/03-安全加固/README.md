@@ -150,6 +150,23 @@ spec:
 - **监控运维**：在 Grafana 中加入安全仪表，如 RBAC 变更计数、NetworkPolicy 拒绝事件
 - **Service Mesh**：Istio mTLS、AuthorizationPolicy 与本模块 NetworkPolicy 配合实现零信任
 
+## 概念卡速记
+
+> 📌 **零信任网络 (Zero Trust)**
+> 定义：默认拒绝任何网络访问，基于身份、上下文和策略授予临时访问权限。
+> 课程作用：引导学员结合 NetworkPolicy、Istio AuthorizationPolicy 构建多层防护。
+> 快速提示：先以命名空间隔离建立粗粒度策略，再逐步细化到 Pod Label 级别。
+
+> 📌 **RBAC 最小权限 (Least Privilege RBAC)**
+> 定义：仅授予执行任务所必需的 API 权限，防止横向移动和误操作。
+> 课程作用：支撑 CI/CD Robot、运维团队的权限设计，是安全基线核心。
+> 快速提示：使用 `kubectl auth can-i --as system:serviceaccount:ns:sa` 验证权限边界。
+
+> 📌 **供应链安全 (Supply Chain Security)**
+> 定义：覆盖从代码、构建、镜像到部署整个链路的完整信任与审计机制。
+> 课程作用：结合 cosign 签名、漏洞扫描与 GitOps 验证，确保发布 Artifact 可追溯。
+> 快速提示：在 CI 中执行 `cosign sign` 与 `cosign verify`，并记录签名元数据到 SBOM。
+
 ## 学习检验
 
 ### 自查问题
