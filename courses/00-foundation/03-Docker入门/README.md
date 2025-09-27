@@ -11,6 +11,38 @@
 - 构建自定义 Docker 镜像
 - 理解 Docker 网络和存储基础
 
+## 概念卡速记
+
+> 📌 **概念卡：Docker Engine（容器运行引擎）**  
+> **定义**：Docker 的核心守护进程与 CLI 组合，负责镜像管理、容器生命周期与网络/存储抽象。  
+> **课程中作用**：后续所有 `docker` 命令均与 Docker Engine 交互，理解它有助于排查常见 Daemon 问题。  
+> **快速命令**：`docker info`、`docker version`
+
+> 📌 **概念卡：Docker Image（容器镜像）**  
+> **定义**：分层存储的只读模板，包含应用代码、依赖与启动命令；通过 OCI 镜像规范描述。  
+> **课程中作用**：镜像是创建容器的前提，后续 Kubernetes 中的 Pod 也依赖镜像作为运行单元。  
+> **快速命令**：`docker pull nginx:alpine`、`docker images`
+
+> 📌 **概念卡：Docker Container（容器实例）**  
+> **定义**：镜像运行后的实例，包含可写层与运行态配置；生命周期受 Docker Engine 管理。  
+> **课程中作用**：掌握容器的启动、停止、日志查看，是理解 Pod 行为的基础。  
+> **快速命令**：`docker run -d nginx`、`docker ps`
+
+> 📌 **概念卡：Dockerfile（镜像构建脚本）**  
+> **定义**：描述镜像构建步骤的声明式文件，通过层级缓存实现高效构建。  
+> **课程中作用**：后续任务需编写 Dockerfile 支持自定义应用镜像，理解各指令语义避免构建陷阱。  
+> **快速命令**：`docker build -t demo:latest -f Dockerfile .`
+
+> 📌 **概念卡：Docker Volume（数据卷）**  
+> **定义**：由 Docker 管理的持久化存储，可在容器间共享并独立于容器生命周期。  
+> **课程中作用**：支撑实验中的数据持久化与状态共享，后续 Kubernetes Volume 学习的铺垫。  
+> **关键命令**：`docker volume create data-vol`、`docker volume inspect data-vol`
+
+> 📌 **概念卡：Docker Compose（多容器编排）**  
+> **定义**：通过 `docker-compose.yaml` 定义多容器应用的服务、网络与卷，实现一键启动和管理。  
+> **课程中作用**：提前熟悉声明式容器编排思路，为 Kubernetes 的 YAML 清单做准备。  
+> **关键命令**：`docker compose up -d`
+
 ## 前置要求
 
 - 已完成"容器基础"模块

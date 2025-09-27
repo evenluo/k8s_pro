@@ -10,6 +10,28 @@
 - 了解组件间的交互机制和数据流
 - 理解 K8s 网络和存储架构模型
 
+## 概念卡速记
+
+> 📌 **概念卡：Control Plane（控制平面）**  
+> **定义**：由 API Server、etcd、Scheduler、Controller Manager 等组件组成，负责整个集群的状态管理与调度决策。  
+> **学习提醒**：控制平面高可用是生产级集群重点，理解其组件职责是后续故障排查的起点。  
+> **关键命令**：`kubectl get componentstatuses`、`kubectl get nodes --selector='node-role.kubernetes.io/control-plane'`
+
+> 📌 **概念卡：Data Plane（数据平面/工作节点）**  
+> **定义**：运行应用工作负载的节点，由 kubelet、kube-proxy 与容器运行时协同工作。  
+> **学习提醒**：kubelet 上报节点状态，kube-proxy 维护服务网络，两者健康度直接影响 Pod 生命周期。  
+> **关键命令**：`kubectl describe node <node-name>`
+
+> 📌 **概念卡：API Server（集群 API 服务）**  
+> **定义**：控制平面核心入口，提供 RESTful API、认证授权与准入控制，是所有命令与控制器的交互枢纽。  
+> **学习提醒**：排查集群问题时优先检查 API Server 日志与健康状态。  
+> **关键命令**：`kubectl get --raw='/healthz'`
+
+> 📌 **概念卡：etcd（分布式键值存储）**  
+> **定义**：保存集群期望状态与配置的高一致性键值存储，支持事务与快照。  
+> **学习提醒**：etcd 性能与备份策略决定集群可靠性，需掌握备份/恢复流程。  
+> **关键命令**：`ETCDCTL_API=3 etcdctl snapshot save backup.db`
+
 ## 前置知识
 
 - 容器和 Docker 基础概念

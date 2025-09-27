@@ -11,6 +11,48 @@
 - 运用 Namespace 实现多租户资源隔离
 - 理解各组件间的协作关系和最佳实践
 
+## 概念卡速记
+
+> 📌 **概念卡：Pod（最小调度单元）**  
+> **定义**：Pod 是 Kubernetes 中可被调度的最小单元，包含一个或多个共享网络与存储的容器。  
+> **学习提醒**：Pod 生命周期短暂，适合作为应用运行时封装，状态数据需挂载 Volume。  
+> **关键命令**：`kubectl get pods`、`kubectl describe pod <name>`
+
+> 📌 **概念卡：ReplicaSet（副本控制器）**  
+> **定义**：管理 Pod 副本数量的控制器，确保实际副本数与期望一致。  
+> **学习提醒**：ReplicaSet 通常由 Deployment 自动创建，手动管理场景少，但理解其作用有助于掌握滚动更新流程。  
+> **关键命令**：`kubectl get rs`、`kubectl scale rs <name> --replicas=3`
+
+> 📌 **概念卡：Deployment（部署控制器）**  
+> **定义**：提供声明式更新的控制器，通过管理 ReplicaSet 实现滚动发布、回滚和版本历史。  
+> **学习提醒**：Deployment 是生产环境最常用的工作负载，理解其策略字段（`strategy.rollingUpdate`）尤为重要。  
+> **关键命令**：`kubectl rollout status deployment/<name>`、`kubectl rollout undo deployment/<name>`
+
+> 📌 **概念卡：Service（服务抽象）**  
+> **定义**：为一组 Pod 提供稳定的虚拟 IP 和 DNS 名称，并实现负载均衡。  
+> **学习提醒**：根据访问需求选择 `ClusterIP`、`NodePort`、`LoadBalancer` 类型，理解 `selector` 与 Endpoints 的关系。  
+> **关键命令**：`kubectl get svc`、`kubectl describe svc <name>`
+
+> 📌 **概念卡：Namespace（命名空间）**  
+> **定义**：逻辑隔离机制，将资源划分到不同的命名空间，支持多租户与资源配额。  
+> **学习提醒**：实践中需要结合 RBAC 与 ResourceQuota 才能实现完整隔离。  
+> **关键命令**：`kubectl get ns`、`kubectl create namespace staging`
+
+> 📌 **概念卡：ConfigMap（配置映射）**  
+> **定义**：以键值对形式存储非敏感配置数据，可通过环境变量或文件挂载注入容器。  
+> **学习提醒**：配置修改默认不会自动热加载，需要结合注解或 `rollout restart` 触发更新。  
+> **关键命令**：`kubectl create configmap app-config --from-file=config/`
+
+> 📌 **概念卡：Secret（敏感信息对象）**  
+> **定义**：专门用于保存凭证、密钥等敏感数据的资源，数据以 Base64 编码存储。  
+> **学习提醒**：结合 RBAC、命名空间隔离和加密存储，避免明文泄露；与 ConfigMap 的使用方式类似但权限更严格。  
+> **关键命令**：`kubectl create secret generic db-credentials --from-literal=password=xxx`
+
+> 📌 **概念卡：PersistentVolume / PersistentVolumeClaim（持久卷与声明）**  
+> **定义**：PersistentVolume (PV) 表示集群中已供给的存储资源，PersistentVolumeClaim (PVC) 是工作负载请求存储的声明。  
+> **学习提醒**：PVC 与 PV 通过访问模式和存储类匹配，Pod 挂载 PVC 以实现数据持久化。  
+> **快速命令**：`kubectl get pv`、`kubectl get pvc`
+
 ## 前置知识
 
 - 完成 Kubernetes 架构学习

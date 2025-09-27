@@ -11,6 +11,28 @@
 - 实现滚动更新、扩缩容、回滚等高级部署策略
 - 掌握常见部署问题的诊断和解决方法
 
+## 概念卡速记
+
+> 📌 **概念卡：kubectl（Kubernetes CLI）**  
+> **定义**：官方命令行工具，通过 kubeconfig 与 API Server 交互，支持资源的 CRUD 和运维操作。  
+> **学习提醒**：掌握子命令结构 `kubectl <resource> <verb>`，结合 `--namespace`、`-o yaml/json` 进行高效调试。  
+> **关键命令**：`kubectl get pods -A`、`kubectl explain deployment.spec`
+
+> 📌 **概念卡：kubeconfig（集群连接配置）**  
+> **定义**：存储集群、用户、上下文信息的 YAML 文件，默认位置 `~/.kube/config`。  
+> **学习提醒**：切换上下文与命名空间时应确保配置同步，避免误操作生产集群。  
+> **关键命令**：`kubectl config use-context`、`kubectl config set-context --current --namespace=dev`
+
+> 📌 **概念卡：Kubernetes Manifest（资源清单）**  
+> **定义**：以 YAML/JSON 描述 Kubernetes 资源期望状态的文件，体现声明式管理思想。  
+> **学习提醒**：通过 `apiVersion`、`kind`、`metadata`、`spec` 四大字段理解资源结构，保证缩进与类型正确。  
+> **关键命令**：`kubectl apply -f deployment.yaml`、`kubectl diff -f deployment.yaml`
+
+> 📌 **概念卡：Rolling Update（滚动更新策略）**  
+> **定义**：Deployment 默认更新策略，逐个替换 Pod，保证服务不中断。  
+> **学习提醒**：关注 `maxSurge` 与 `maxUnavailable`，合理配置以平衡安全与速度。  
+> **关键命令**：`kubectl rollout status deployment/<name>`、`kubectl rollout history deployment/<name>`
+
 ## 前置知识
 
 - 完成 Kubernetes 架构和核心组件学习

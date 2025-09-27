@@ -1,3 +1,4 @@
+[TOC]
 # Tasks: Kubernetes Expert Learning Curriculum
 
 **Input**: Design documents from `/specs/001-k8s/`
@@ -23,14 +24,14 @@
    → Different directories = mark [P] for parallel
    → Prerequisites enforced in sequence
    → Validation after each major phase
-5. Number tasks sequentially (T001-T050)
+5. Number tasks sequentially (T001-T062)
 6. Generate dependency notes
 7. Create parallel execution guidance
 8. Validate task completeness:
    → All courses have modules? ✓
    → All modules have labs? ✓
    → All contracts validated? ✓
-9. Return: SUCCESS (50 tasks ready for execution)
+9. Return: SUCCESS (62 tasks ready for execution)
 ```
 
 ## Format: `[ID] [P?] Description`
@@ -42,7 +43,7 @@ Educational project structure per plan.md:
 - **Courses**: `courses/00-foundation/`, `courses/01-core/`, etc.
 - **Tools**: `tools/setup/`, `tools/validation/`, `tools/troubleshoot/`
 - **Resources**: `resources/cheatsheets/`, `resources/diagrams/`
-- **Application**: `courses/03-project/nginx-gateway/`, etc.
+- **Application**: `courses/04-project/nginx-gateway/`, etc.
 
 ## Phase 3.1: Environment Setup (基础环境配置)
 - [x] T001 Create main project directory structure: courses/, tools/, resources/, specs/

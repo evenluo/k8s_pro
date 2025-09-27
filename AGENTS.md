@@ -15,6 +15,7 @@
 - Structure Markdown with clear heading levels, short paragraphs, and fenced `bash` blocks for commands; keep emoji purposeful.
 - Markdown 文档已启用目录功能（md 支持 `[TOC]`），请在文首保留该标签以维持导航体验。
 - Follow the curriculum voice: explanatory prose primarily in Chinese with English technical terms (per FR-009) and one idea per subsection.
+- 当章节首次引入新概念或工具时，在对应文档中添加统一的“## 概念卡速记”段落；每张概念卡使用带 `📌` 的引用块，按照“定义 → 课程/任务作用 → 快速命令或提示”格式书写，确保学习节奏一致。
 - Branch and file names remain lowercase and hyphenated (`001-feature`, `data-model.md`); scripts stay executable and use snake-case.
 
 ## Testing Guidelines

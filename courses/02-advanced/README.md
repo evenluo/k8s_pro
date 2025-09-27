@@ -48,6 +48,38 @@
 - 服务网格（Istio）集成
 - 自动化 CI/CD 流水线
 
+## 概念卡速记
+
+> 📌 **概念卡：Production Readiness Checklist（生产就绪清单）**  
+> **定义**：涵盖可用性、可观测性、安全性、成本等维度的检查项集合，用于评估集群上线前状态。  
+> **学习提醒**：建议将课程各章节产出映射到清单项，例如高可用部署、监控告警、备份策略。  
+> **关联任务**：T021-T027
+
+> 📌 **概念卡：Observability Stack（可观测性栈）**  
+> **定义**：由 Prometheus、Grafana、Alertmanager 等组成的度量观察体系，结合日志与追踪构建三大支柱。  
+> **学习提醒**：在实验中关注指标采集（metrics）、数据可视化（dashboards）与告警闭环（alerts）。  
+> **关键命令**：`kubectl port-forward -n monitoring svc/prometheus-server 9090`
+
+> 📌 **概念卡：RBAC（基于角色的访问控制）**  
+> **定义**：通过 Role、ClusterRole、RoleBinding 将权限精确授予主体（User/ServiceAccount）。  
+> **学习提醒**：设计 RBAC 时遵循最小权限原则，并结合 Namespace 边界与审计日志。  
+> **关键命令**：`kubectl auth can-i --as system:serviceaccount:prod:deployer --namespace=prod get pods`
+
+> 📌 **概念卡：NetworkPolicy（网络策略）**  
+> **定义**：基于标签定义 Pod 之间及 Pod 与外部的网络访问控制规则。  
+> **学习提醒**：需要 CNI 插件支持（如 Calico）；策略默认是“显式允许”，一旦启用需覆盖所有合法流量。  
+> **关键命令**：`kubectl get networkpolicy -n secure`
+
+> 📌 **概念卡：GitOps Workflow（声明式运维流程）**  
+> **定义**：以 Git 仓库作为单一事实来源，通过自动化同步（如 Argo CD、Flux）将配置应用到集群。  
+> **学习提醒**：分离 `apps` 与 `infrastructure` 仓库，搭配 PR 审核确保变更可追溯。  
+> **关键命令**：`argocd app sync <app-name>`（或使用 Flux `flux reconcile`）
+
+> 📌 **概念卡：Service Mesh（服务网格）**  
+> **定义**：通过 Sidecar 代理和控制平面提供流量治理、可观测性与安全策略的基础设施层，常见实现有 Istio。  
+> **学习提醒**：本课程后续模块将利用 Istio 实现流量管理与安全，这里需提前理解控制面/数据面的职责划分。  
+> **快速命令**：`istioctl proxy-status`
+
 ## 课程结构
 
 ### 📚 理论与实践模块
@@ -197,10 +229,10 @@ graph TB
 - Git 2.30+（GitOps 实践）
 
 ### 🌐 网络访问
-- Docker Hub 和 Quay.io （镜像拉取）
-- Grafana Labs 仓库（监控组件）
-- Prometheus 社区仓库
-- GitHub/GitLab（代码仓库访问）
+- 能够访问 Docker Hub、GitHub、Helm Charts 仓库
+- 可选：能够访问 Prometheus、Grafana 官方文档
+
+## 学习方法建议
 
 ## 学习成果
 

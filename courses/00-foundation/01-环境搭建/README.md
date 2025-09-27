@@ -13,6 +13,28 @@
 - ✅ 验证环境配置正确性
 - ✅ 了解资源优化策略
 
+## 概念卡速记
+
+> 📌 **概念卡：Homebrew（macOS 包管理器）**  
+> **定义**：Homebrew 是 macOS 上的包管理器，提供统一的 `brew` 命令来安装、升级、卸载开发工具。  
+> **课程中作用**：所有 Kubernetes 前置工具（kubectl、Kind、Helm、Go 等）均通过 Homebrew 安装以保证版本一致性。  
+> **快速命令**：`brew update && brew install kubectl kind helm`
+
+> 📌 **概念卡：Docker Desktop（容器运行环境）**  
+> **定义**：Docker Desktop 将 Docker Engine、GUI 管理界面与虚拟化层整合，为 macOS 提供容器运行时。  
+> **课程中作用**：作为 Kind 集群和镜像构建的运行基础，需预留至少 8GB 内存以满足多节点模拟。  
+> **快速命令**：`open -a Docker`、`docker info`
+
+> 📌 **概念卡：Kind（Kubernetes in Docker）**  
+> **定义**：Kind 使用 Docker 容器模拟 Kubernetes 控制平面与工作节点，适合本地练习多节点拓扑。  
+> **课程中作用**：从 T005 开始用于搭建实验集群，同时验证资源限制与组件版本。  
+> **快速命令**：`kind create cluster --config kind-config.yaml`
+
+> 📌 **概念卡：环境验证脚本（Environment Validation Script）**  
+> **定义**：自动化脚本 `tools/validation/check-environment.sh`，通过命令探测与版本比对确认前置条件。  
+> **课程中作用**：保障各阶段在一致环境下执行，执行失败时给出修复提示。  
+> **快速命令**：`./tools/validation/check-environment.sh`
+
 ## 📋 环境要求
 
 ### 系统要求

@@ -107,6 +107,7 @@ tests/                   # Test files
 
 - All feature work starts from specification (`/specify`)
 - Markdown 文档已启用目录功能（md 支持 `[TOC]`），编辑时请保留文首标签以确保导航可用。
+- 引入新概念、新工具或关键术语时，请在相应 Markdown 文档添加“## 概念卡速记”段落；每张卡片采用带 `📌` 的引用块，并按照“定义 → 在课程中的作用 → 快速命令/提示”顺序说明，保持学习材料的节奏一致。
 - Follow the phase order: specify → plan → tasks → implement
 - Each phase validates prerequisites before execution
 - Templates enforce consistent structure across features

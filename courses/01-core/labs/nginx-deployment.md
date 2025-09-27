@@ -16,6 +16,33 @@
 - 执行滚动更新和版本回滚
 - 进行扩缩容和应用监控
 
+## 概念卡速记
+
+> 📌 **概念卡：NodePort Service（节点端口服务）**  
+> **定义**：通过在每个节点开放固定端口，将集群内的 Service 暴露给外部访问。  
+> **实验提醒**：默认端口范围 30000-32767；与 Kind 结合时需匹配 `extraPortMappings`。  
+> **关键命令**：`kubectl get svc nginx-service -o wide`
+
+> 📌 **概念卡：ConfigMap（配置映射）**  
+> **定义**：用于存储非敏感配置信息的键值对资源，可挂载为文件或注入环境变量。  
+> **实验提醒**：配置更新后需触发 Pod 重启或使用 `kubectl rollout restart`，否则容器不会自动加载新配置。  
+> **关键命令**：`kubectl create configmap nginx-config --from-file=nginx.conf`
+
+> 📌 **概念卡：Liveness/Readiness Probe（探针）**  
+> **定义**：容器健康检测机制，Liveness 确保容器存活，Readiness 确保就绪后再接收流量。  
+> **实验提醒**：Readiness 失败会将 Pod 从 Service 端点中移除，常用于滚动更新时避免流量打到未就绪实例。  
+> **关键命令**：`kubectl describe pod <pod-name>` 查看探针状态
+
+> 📌 **概念卡：kubectl rollout（部署发布管理）**  
+> **定义**：Deployment 的版本管理命令组，用于跟踪、暂停、恢复与回滚发布。  
+> **实验提醒**：滚动更新后运行 `kubectl rollout history` 记录版本说明，便于回溯。  
+> **关键命令**：`kubectl rollout status deployment/nginx-deployment`
+
+> 📌 **概念卡：HorizontalPodAutoscaler（HPA 自动扩缩容）**  
+> **定义**：根据 CPU、内存或自定义指标自动调整 Deployment/ReplicaSet 的 Pod 副本数。  
+> **实验提醒**：配置 HPA 前需确保目标资源已设置 `requests`，并部署 `metrics-server` 以提供监控数据。  
+> **关键命令**：`kubectl autoscale deployment nginx-deployment --cpu-percent=60 --min=3 --max=6`
+
 ## 前置条件
 
 - ✅ Kind 集群已创建并运行（参考 kind-cluster.yaml）
