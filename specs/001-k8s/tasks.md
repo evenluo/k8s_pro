@@ -72,8 +72,8 @@ Educational project structure per plan.md:
 ## Phase 3.4: Advanced Production Course (高级生产课程)
 - [x] T020 Create course structure `courses/02-advanced/` with subdirectories: 01-生产实践/, 02-监控运维/, 03-安全加固/, labs/
 - [x] T021 [P] Write production practices guide `courses/02-advanced/01-生产实践/README.md` with Linux differences
-- [ ] T022 [P] Write monitoring guide `courses/02-advanced/02-监控运维/README.md` covering Prometheus/Grafana
-- [ ] T023 [P] Write security guide `courses/02-advanced/03-安全加固/README.md` with RBAC, NetworkPolicy
+- [x] T022 [P] Write monitoring guide `courses/02-advanced/02-监控运维/README.md` covering Prometheus/Grafana
+- [x] T023 [P] Write security guide `courses/02-advanced/03-安全加固/README.md` with RBAC, NetworkPolicy
 - [ ] T024 Create monitoring stack lab `courses/02-advanced/labs/prometheus-stack.yaml` with resource optimization
 - [ ] T025 Create security hardening lab `courses/02-advanced/labs/security-rbac.yaml` with role definitions
 - [ ] T026 [P] Create troubleshooting scenarios `courses/02-advanced/labs/troubleshooting/` with 5 common issues
